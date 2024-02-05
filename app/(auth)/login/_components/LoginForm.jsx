@@ -31,10 +31,10 @@ import {setSharedVariable} from '../../../session'
         localStorage.setItem('tokenSession', data.access_token );
         //to check if user is log in
         let  mCheck = data? true : false
-        dispatch(setUser(mCheck));
+       dispatch(setUser(mCheck));
         setCheck(mCheck)
         setSharedVariable(mCheck)
-        // console.log('check in get all' , check);
+        console.log('check in get all' , check);
         setErrorMessage(error)
             }
 
