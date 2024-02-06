@@ -16,6 +16,9 @@ import PurchaseFormModall from "../../../stock/(routes)/purchase/_components/Pur
 import useApiFetch from "../../../../../customHook/CustomHook";
 import PurchaseBody from "../../../stock/(routes)/purchase/_components/PurchaseBody";
 
+
+import DiscountGroupBody from "./_components/DiscountGroupBody"
+
 const DiscountGroupt = () => {
 
 // const[openModal,setOpenModal]=useState(false);
@@ -119,7 +122,7 @@ const DiscountGroupt = () => {
 
       {/* <CustomModal isOpen={openModal}  onClose={()=>setOpenModal(!openModal)} tabs={tabs} heading={"Discount Group"} />
     */}
-    <PurchaseBody/>
+      <DiscountGroupBody/>
 
     </div>
   </div>
