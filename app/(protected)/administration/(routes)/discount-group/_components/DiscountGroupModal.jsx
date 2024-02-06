@@ -40,8 +40,8 @@ const Tooltip = ({ content, children }) => {
 
 
   function DiscountGroupModal({ data , length , child  }) {
-
-
+    console.log("muner",data)
+   
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleOpenModal = () => {
       setIsModalOpen(true);
@@ -52,7 +52,7 @@ const Tooltip = ({ content, children }) => {
   const tabs = [
     { 
       icon: <GoHome/>,
-      label: 'Details', content: <div><DiscountGroupForm/></div> },
+      label: 'Details', content: <div><DiscountGroupForm id={1}/></div> },
     { label: 'Audit Log', content: <div>Content for Audit Log</div> },
   ]; 
 
