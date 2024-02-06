@@ -40,7 +40,7 @@ const Tooltip = ({ content, children }) => {
 
 
 
-  function ModalOpen({ data , length , child , Modall , rowIndex  }) {
+  function ModalOpen({ data , length , child , Modall , rowIndex ,rowData }) {
 
 
    
@@ -49,7 +49,7 @@ const Tooltip = ({ content, children }) => {
 
   let Comp = Modall
   let [index , setIndex] = useState()
-
+    let singleRow=rowData[rowIndex];
 
   useEffect(()=>{
     setIndex(rowIndex)
@@ -61,7 +61,7 @@ const Tooltip = ({ content, children }) => {
         <Tooltip content="Open purchase Order Form">
           <div className=' flex items-center px-3 border-l'>
             {/* <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' /> */}
-          { Comp &&   <Comp index={index}/>}
+          { Comp &&   <Comp index={singleRow}/>}
           </div>
         </Tooltip>
         {/* <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/> */}

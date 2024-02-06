@@ -77,14 +77,14 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className=' w-full    '>
-        <div className=' h-full w-full  '>
+    <div className=''>
+        
           <div className=''>
         <GridTable head={head} row={data?.Result} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
         </div>
         <div className='my-5'>
         <GridTable head={head} row={compRow} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Completed' GridColor="green-400" GridColaps={true} />
-        </div>
+      
         </div>
     </div>
   )
