@@ -19,11 +19,13 @@ import Tooltip from '../../../../../../components/misc/tooltip/Tooltip'
 import InputTextEut from '../../../../../../components/misc/textinput/InputTextEut'
 // import PhoneNumber from './GridTable/PhoneNumber'
 
-const DiscountGroupForm = ({id}) => {
+const DiscountGroupForm = ({data}) => {
 
   const [head, setHead] = useState([{ title: 'SubItem', slector: 'SubItem', Wid: 250, customComp: ModalOpen }, { title: 'Part', slector: 'Part', Wid: 120 }, { title: 'Cost', slector: 'Cost', Wid: 100 }, { title: 'LastCost', slector: 'LastCost', Wid: 120 }, { title: 'OhQty', slector: 'OhQty', Wid: 120 }, { title: 'OrderQty', slector: 'OrderQty', Wid: 120 }, { title: 'UOM', slector: 'UOM', Wid: 120 }, { title: 'Conv', slector: 'Conv', Wid: 120 }, { title: 'CaseQty', slector: 'CaseQty', Wid: 120 }, { title: 'Split', slector: 'Split', Wid: 120 }, { title: 'Batch', slector: 'Batch', Wid: 120 }, { title: 'Expiry', slector: 'Expiry', Wid: 120 }])
   const [row, setRow] = useState([{ SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" }, { SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" },])
-
+      console.log(
+        data
+      )
   const options = [
     {
       id: 1,
@@ -102,7 +104,7 @@ const DiscountGroupForm = ({id}) => {
           {/* <DropDownInput options={options} /> */}
           {/* <DateTimePicker isDisabled={true} /> */}
 
-          <InputTextEut label="CODE" placeHolder='CODE' isDisabled={false} initialValue={id}/>
+          <InputTextEut label="CODE" placeHolder='CODE' isDisabled={false} initialValue={data.CODE}/>
           <InputTextEut label="Name" placeHolder='Name' isDisabled={true} />
           <InputTextEut label="Discription" placeHolder='Discription' isDisabled={true} />
           <InputTextEut label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={true} />
