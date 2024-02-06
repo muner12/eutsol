@@ -39,8 +39,8 @@ const Tooltip = ({ content, children }) => {
 
 
 
-  function DiscountGroupModal({ data , length , child  }) {
-    console.log("muner",data)
+  function DiscountGroupModal({ data , length , child ,index }) {
+    console.log("muner",index)
    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleOpenModal = () => {
