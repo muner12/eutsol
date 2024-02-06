@@ -7,10 +7,10 @@ import PurchaseForm from '../../../../../../components/misc/PurchaseForm'
 import CustomModal from '../../../../../../components/misc/custommodal/CustomModal'
 import { TbDeviceIpadHorizontalPlus } from 'react-icons/tb';
 
-const PurchaseFormModall = () => {
+const PurchaseFormModall = ({index}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
+console.log('modall index' , index);
     const handleOpenModal = () => {
         setIsModalOpen(true);
       };
@@ -26,6 +26,7 @@ const PurchaseFormModall = () => {
       ]; 
   return (
     <div>
+      
         <TbDeviceIpadHorizontalPlus onClick={handleOpenModal} className='text-[25px] text-gray-500' />
         <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/>
 

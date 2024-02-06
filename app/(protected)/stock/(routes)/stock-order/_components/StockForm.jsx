@@ -52,7 +52,7 @@ function StockForm() {
               <p className='py-3 text-gray-500 text-[14px]'>Status</p>
               <div className='flex items-center'>
 
-                <div className={`p-1 h-fit w-[30px] rounded-full ${item == "High" ? "bg-orange-600" : item == "Medium" ? "bg-blue-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
+                <div className={`p-1 h-fit w-[30px] rounded-full ${item == "High" ? "bg-orange-600" : item == "Medium" ? "bg-blue-400" : item == "Low" ? "bg-cyan-400" : item == "Full Transferred |Full Assigned" ? "bg-yellow-400" : item == "Full Transferred |Not Assigned" ? "bg-green-500" : item == "NEW" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "Partial Transferred | Partial Assigned" ? "bg-blue-600" : ""}`}></div>
                 <select className='outline-none' onChange={getSlect}>
                   <option value="Full Transferred |Full Assigned">F T |F A</option>
                   <option value="Initiated">Initiated</option>

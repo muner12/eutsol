@@ -9,7 +9,7 @@ import { GoHome } from "react-icons/go";
 
 
 
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 
 
 
@@ -40,25 +40,20 @@ const Tooltip = ({ content, children }) => {
 
 
 
-  function ModalOpen({ data , length , child , Modall  }) {
+  function ModalOpen({ data , length , child , Modall , rowIndex  }) {
 
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleOpenModal = () => {
-      setIsModalOpen(true);
-    };
-    const handleCloseModal = () => {
-      setIsModalOpen(false);
-    };
-  const tabs = [
-    { 
-      icon: <GoHome/>,
-      label: 'Details', content: <div><PurchaseForm/></div> },
-    { label: 'Audit Log', content: <div>Content for Audit Log</div> },
-  ]; 
+   
+
+   
 
   let Comp = Modall
+  let [index , setIndex] = useState()
 
+
+  useEffect(()=>{
+    setIndex(rowIndex)
+   } , [data])
 
     return (
       <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
@@ -66,10 +61,10 @@ const Tooltip = ({ content, children }) => {
         <Tooltip content="Open purchase Order Form">
           <div className=' flex items-center px-3 border-l'>
             {/* <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' /> */}
-          { Comp &&   <Comp/>}
+          { Comp &&   <Comp index={index}/>}
           </div>
         </Tooltip>
-        <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/>
+        {/* <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/> */}
         
       </div>
     );

@@ -6,6 +6,7 @@ import { GoHome } from "react-icons/go";
 import { SlArrowDown } from "react-icons/sl";
 import CustomModal from '../../../../../components/misc/custommodal/CustomModal'
 import StockForm from './_components/StockForm'
+import AudtLogGrid from './_components/AudtLogGrid'
 
 function page() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,7 +25,7 @@ function page() {
     {
       icon: <SlArrowDown className="pl-2 text-md" />,
       label: 'More',
-      content: <div>Content for More</div>,
+      content: <div> <AudtLogGrid /></div>,
     },
   ];
 

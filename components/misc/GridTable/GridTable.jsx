@@ -12,7 +12,7 @@ import GridCheckFilter from './GridCheckFilter'
 import { TiArrowUnsorted } from "react-icons/ti";
 import GridDateFilter from './GridDateFilter'
 
-const GridTest = ({ head, row, subHead, setHead, setSubHead, formModal , GridTitle , GridColor , GridColaps}) => {
+const GridTest = ({ head, row, subHead, setHead, setSubHead , GridTitle , GridColor , GridColaps}) => {
     const [dropDown, setDropDown] = useState()
     const [cells, setCells] = useState(0)
     // const [head, setHead] = useState([{ title: 'Contact', Wid: 200, filter: "textFilter" }, { title: 'Priority', Wid: 100, status: "priority", customComp: true }, { title: 'orderDate', Wid: 100 }, { title: 'compDate', Wid: 100 }, { title: 'Vander', Wid: 100 }, { title: 'phone', Wid: 200 }, { title: 'email', Wid: 200 }, { title: 'cost', Wid: 200 }, { title: 'status', Wid: 150 , status: "status" , customComp: true}, { title: 'comments', Wid: 200 },])
@@ -213,14 +213,14 @@ setColaps(GridColaps)
 
                                                             header.Status ?
                                                                 <div style={{ minWidth: `${header.Wid}px` }} className='flex w-full  h-full border'>
-                                                                    <header.Status data={rowData[header.slector]} />
+                                                                    <header.Status data={rowData[header.slector]} index={rowI}  rowData={rowData} />
                                                                 </div>
                                                                 : header.date ?
                                                                     <div style={{ minWidth: `${header.Wid}px` }} className='flex w-full  h-full border'>
                                                                         <GridDateCell data={rowData[header.slector]} />
                                                                     </div>
                                                                     :
-                                                                    header.customComp && headerIndex != 0 ? <div onDoubleClick={editActive} style={{ minWidth: `${header.Wid}px` }} className='flex w-full  h-full border'> {header.slector === activeEdit?.title && rowI === activeEdit?.rowIndex ? <input placeholder={rowData[header.slector]} className='w-full text-gray-500 text-[14px] ' type="text" /> : <header.customComp data={rowData[header.slector]} />} </div>
+                                                                    header.customComp && headerIndex != 0 ? <div onDoubleClick={editActive} style={{ minWidth: `${header.Wid}px` }} className='flex w-full  h-full border'> {header.slector === activeEdit?.title && rowI === activeEdit?.rowIndex ? <input placeholder={rowData[header.slector]} className='w-full text-gray-500 text-[14px] ' type="text" /> : <header.customComp data={rowData[header.slector]} index={rowI} rowData={rowData} />} </div>
                                                                         :
                                                                         <div onDoubleClick={editActive} style={{ minWidth: `${header.Wid}px` }} className={` ${headerIndex != 0 ? "px-2 justify-center " : "overflow-hidden"} w-full flex items-center  text-gray-500 h-full border py-1 group `} >
                                                                             {/* {headerIndex == 0 && rowData.childrenData ? */}
@@ -228,7 +228,7 @@ setColaps(GridColaps)
                                                                                 <div className={` ${headerIndex == 0 && rowData.childrenData ? "group-hover:visible" : ""} invisible  text-gray-400`}> {dropDown == rowI ? <RiArrowDropUpLine onClick={() => setDropDown(-1)} className='text-[25px]' /> : <RiArrowDropDownLine onClick={() => setDropDown(rowI)} className='text-[25px]' />}</div>
                                                                             </div>
                                                                             {/* // : ""} */}
-                                                                            {header.slector === activeEdit?.title && rowI === activeEdit?.rowIndex ? <input placeholder={rowData[header.slector]} className='w-full text-gray-500 text-[14px]' type="text" /> : headerIndex == 0 ? <div className='flex w-full h-full '>  <ModalOpen data={rowData[header.slector]} Modall={header.Modal} child={false} length={rowData?.childrenData?.length > 0 ? subLentgh : 0} /> </div> : <p className='text-[14px] py-1 '>{rowData[header.slector]}</p>}
+                                                                            {header.slector === activeEdit?.title && rowI === activeEdit?.rowIndex ? <input placeholder={rowData[header.slector]} className='w-full text-gray-500 text-[14px]' type="text" /> : headerIndex == 0 ? <div className='flex w-full h-full '>  <ModalOpen data={rowData[header.slector]} rowIndex={rowI} Modall={header.Modal} child={false} length={rowData?.childrenData?.length > 0 ? subLentgh : 0} /> </div> : <p className='text-[14px] py-1 '>{rowData[header.slector]}</p>}
                                                                         </div>
                                                         }
 
@@ -240,7 +240,7 @@ setColaps(GridColaps)
                                         {
                                             subHead &&
                                             <div className={`pl-6 py-5 border-l border-l-green-400 bg-white w-full ${dropDown == rowI ? "block" : "hidden"}`}>
-                                                <SubGrid dropDown={dropDown} Subdata={rowData.childrenData} setHead={setSubHead} head={subHead} CustomModal={formModal} />
+                                                <SubGrid dropDown={dropDown} Subdata={rowData.childrenData} setHead={setSubHead} head={subHead}  />
                                             </div>
                                         }
 
