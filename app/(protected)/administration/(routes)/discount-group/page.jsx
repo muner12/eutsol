@@ -115,7 +115,7 @@ const DiscountGroupt = () => {
 
   <DashbordNav heading="Discount Group" ptext="Welcome to contacts board! here you can store manage all of your contacts "/>
             
-    <div className=' overflow-auto pl-5 h-[75%]   flex justify-center '>
+    <div className=' overflow-auto pl-5 h-[75%]   flex  '>
       {/* <GridTabel head={head} row={data?.Result} setHead={setHead} formModal={CustomModal} GridTitle='Active' GridColor="indigo-400" GridColaps={false} /> */}
       {/* <GridTest head={head} row={data?.Result} formModal={CustomModal} GridTitle='Active' GridColor="indigo-400" GridColaps={false} /> */}
 
