@@ -62,12 +62,12 @@ const DiscountGroupForm = ({data}) => {
     },
   ];
   return (
-    <div className=' bg-gray-100 rounded-lg'>
+    <div className=' bg-gray-100 rounded-lg  w-full'>
 
-      <div className='gap-2 flex  p-3 rounded-lg  '>
+      <div className='gap-2 flex  p-3 rounded-lg  justify-center'>
 
        
-        <div className='px-4 border  bg-white w-full rounded-md shadow-md shadow-gray-200 py-5'  >
+        <div className='px-4 border  bg-white w-[70%] rounded-md shadow-md shadow-gray-200 py-5'  >
           <div className='flex items-center justify-between'>
             <div className='flex gap-2'>
             <Tooltip  content='Edit'>
