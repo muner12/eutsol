@@ -80,7 +80,7 @@ useEffect(() => {
     <div className=''>
         
           <div className=''>
-        <GridTable head={head} row={data?.Result} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
+        <GridTable head={head} row={data?.Result} setHead={setHead}    GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
         </div>
         <div className='my-5'>
         <GridTable head={head} row={compRow} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Completed' GridColor="green-400" GridColaps={true} />
