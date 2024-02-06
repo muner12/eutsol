@@ -8,7 +8,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function GridDropdown() {
+export default function GridCheckFilter({ options }) {
 
     const [filterFields, setFilterFields] = useState([{ slect: "", text: "", nextCondition: "" }])
 
@@ -42,7 +42,7 @@ export default function GridDropdown() {
         console.log("handle chage text", index, e.target.value);
         let newFilterFields = [...filterFields];
         newFilterFields[index] = { ...newFilterFields[index], nextCondition: nextCondition };
-            setFilterFields(newFilterFields);
+        setFilterFields(newFilterFields);
     }
 
     return (
@@ -78,32 +78,26 @@ export default function GridDropdown() {
                                             '   hover:text-gray-900 text-gray-700 block px-4 py-2 text-sm'
                                         )}
                                     >
-                                          <div className='w-full border-b mb-4 pb-2'>
+                                        <div className='w-full border-b mb-2 pb-2'>
                                             <p>Filter</p>
                                         </div>
-                                        <select className='w-full outline-none mb-2 border border-gray-200 rounded-sm ' name="" id="">
+                                        <div className='w-full outline-none mb-2  rounded-sm ' name="" id="">
 
-                                            <option selected value="Contain">Contain</option>
-                                            <option value="not Contain">not Contain</option>
-
-                                        </select>
-
-                                        <input onChange={(e) => handleChangeText(index, e)} className='w-full outline-none' placeholder='Filter...' type="text" />
-                                        <div className='flex justify-center my-4 '>
-                                            <div onClick={() => setCheck(index, "or")} className='w-[70px] flex  text-center cursor-pointer border border-gray-300 overflow-hidden rounded-full mr-2'>
-                                                <div className={` bg-green-300  ${filterFields[num]?.nextCondition == "or" ? "px-[17px]" : "px-0  "}  rounded-l-full cursor-pointer transition-all duration-700`}></div>
-                                                <p className={`w-full text-center ${filterFields[num]?.nextCondition == "or" ? "text-green-500" : ""}  font-semibold`}>
-                                                    Or
-                                                </p>
-                                            </div>
-                                            <div onClick={() => setCheck(index, "and")} className='w-[70px] flex  text-center border cursor-pointer  border-gray-300 overflow-hidden rounded-full mr-2'>
-                                                <div className={` bg-green-300  ${filterFields[num]?.nextCondition == "and" ? "px-[17px]" : "px-0  "}  rounded-l-full cursor-pointer transition-all duration-700`}></div>
-                                                <p className={`w-full text-center ${filterFields[num]?.nextCondition == "and" ? "text-green-500" : ""}  font-semibold`}>
-                                                    And
-                                                </p>
-                                            </div>
-
+                                            
+                                            {
+                                                options?.map((data) => {
+                                                    return (
+                                                        // <li selected value="Contain">{data}</li>
+                                                        <div className='my-1' >
+                                                            <input type="checkbox" className='mr-2' />
+                                                            <label className='text-gray-500' htmlFor="">{data}</label>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
+
+                                      
                                     </div>
 
                                 </div>

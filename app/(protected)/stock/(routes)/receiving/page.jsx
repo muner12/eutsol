@@ -28,15 +28,16 @@ const page = () => {
     },
   ];
   return (
-    <div>
+    <div className='h-[88vh]'>
         <div>
-            <DashbordNav heading="Receiving" ptext=""/>
+          <button className='bg-blue-300 p-2'onClick={handleOpenModal}>Receiving form</button>
+      <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} tabs={tabs} heading="Receiving Form" />
+            <DashbordNav heading="Receiving" ptext="Welcome to contacts board! here you can store manage all of your contacts "/>
         </div>
-        <div className='p-3'>
+        <div className='overflow-auto p-3'>
       <ReceivingGridView/>
         </div>
-        <button onClick={handleOpenModal}>Receiving form</button>
-      <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} tabs={tabs} heading="Receiving Form" />
+        
     </div>
   )
 }

@@ -8,12 +8,16 @@ import { IoSearchSharp } from "react-icons/io5";
 import { MdOutlineQuestionMark } from "react-icons/md";
 import TopCards from "./TopCards";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 // import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 const Header = () => {
   const [showCard, setShowCard] = useState(false);
+  const route = usePathname();
+  const showHeader = route == '/login' ? false : true;
+  
   return (
-    <div className="bg-[#E1EFF2] py-2 lg:h-[10vh]   md:[10vh] sm:[10vh] h-[7vh] fixed top-0 w-full z-40 ">
+    <div className={`${showHeader?'flex':'hidden'} bg-[#E1EFF2] py-2 lg:h-[10vh]   md:[10vh] sm:[10vh] h-[7vh] fixed top-0 w-full z-40 `}>
       <div className="flex items-center justify-between w-[95%] m-auto">
         <div className="flex items-center gap-3">
           <div

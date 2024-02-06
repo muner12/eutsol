@@ -8,6 +8,7 @@ import { GoHome } from "react-icons/go";
 
 
 
+
 import React, { useState } from 'react'
 
 
@@ -39,7 +40,7 @@ const Tooltip = ({ content, children }) => {
 
 
 
-  function ModalOpen({ data , length , child  }) {
+  function ModalOpen({ data , length , child , Modall  }) {
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,16 +57,20 @@ const Tooltip = ({ content, children }) => {
     { label: 'Audit Log', content: <div>Content for Audit Log</div> },
   ]; 
 
+  let Comp = Modall
+
+
     return (
       <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
     <div className="flex">  {data}<span className={`ml-2 bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
         <Tooltip content="Open purchase Order Form">
           <div className=' flex items-center px-3 border-l'>
-            <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' />
+            {/* <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' /> */}
+          { Comp &&   <Comp/>}
           </div>
         </Tooltip>
         <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/>
-
+        
       </div>
     );
   }

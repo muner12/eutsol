@@ -8,7 +8,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function GridDropdown() {
+export default function GridFilterNum() {
 
     const [filterFields, setFilterFields] = useState([{ slect: "", text: "", nextCondition: "" }])
 
@@ -78,13 +78,14 @@ export default function GridDropdown() {
                                             '   hover:text-gray-900 text-gray-700 block px-4 py-2 text-sm'
                                         )}
                                     >
-                                          <div className='w-full border-b mb-4 pb-2'>
+                                         <div className='w-full border-b mb-4 pb-2'>
                                             <p>Filter</p>
                                         </div>
                                         <select className='w-full outline-none mb-2 border border-gray-200 rounded-sm ' name="" id="">
 
-                                            <option selected value="Contain">Contain</option>
-                                            <option value="not Contain">not Contain</option>
+                                            <option selected value="Contain">equals</option>
+                                            <option value="not Contain">greater then</option>
+                                            <option value="not Contain">less then</option>
 
                                         </select>
 

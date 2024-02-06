@@ -17,7 +17,7 @@ const CustomModal = ({ isOpen, onClose, tabs, heading }) => {
   return (
     //Main div
     <div className="fixed   inset-0 z-50  bg-black bg-opacity-50 flex">
-      <div className="relative p-6 bg-white h-fit w-[95%] mx-auto  mt-9 rounded-md flex flex-col">
+      <div className="relative p-6 bg-white h-[85vh] overflow-scroll w-[95%] mx-auto  mt-9 rounded-md flex flex-col">
         {/* headin and cross icon */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center">
@@ -100,7 +100,7 @@ const CustomModal = ({ isOpen, onClose, tabs, heading }) => {
             </div>
           </div>
           {/* modal body */}
-          <div className="bg-gray-100 h-[500px] overflow-auto ">
+          <div className="bg-gray-100 h-auto overflow-auto ">
             <div className="rounded-sm p-2 ">{tabs[activeTab].content}</div>
           </div>
         </div>

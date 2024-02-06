@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import {
   mouseEvnt,
@@ -43,6 +44,7 @@ const Sidebar = () => {
   // console.log('AdministrationlistState chulling', AdministrationlistState);
 
   const toggleCollapse = (page) => {
+    
     if (page == "stock") {
       if (stockListState == true) {
         dispatch(stockPageEvnt(false));
@@ -80,9 +82,10 @@ const Sidebar = () => {
   const mouseLeave = () => {
     dispatch(mouseEvnt(false));
   };
-
+  const route = usePathname();
+  const showsidebar = route == '/login' ? false : true;
   return (
-    <>
+    <div className={`${showsidebar ? '' :"hidden"}`}>
       <div className=" z-10 bg-[#E1EFF2] lg:flex  md:flex  sm:flex  hidden   ">
         <div
           onMouseEnter={mouseevt}
@@ -248,7 +251,7 @@ const Sidebar = () => {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

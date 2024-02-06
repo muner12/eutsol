@@ -4,6 +4,8 @@ import GridTable from "../../../../../../components/misc/GridTable/GridTable";
 import ModalOpen from "../../../../../../components/misc/GridTable/ModalOpen";
 //import PhoneNumber from '../../../../../../components/misc/GridTable/PhoneNumber'
 import useApiFetch from "../../../../../../customHook/CustomHook";
+import StockStatus from './StockStatus';
+import CustomModal from '../../../../../../components/misc/custommodal/CustomModal'
 import React, { useState, useEffect } from "react";
 
 function StockGridView() {
@@ -18,8 +20,8 @@ function StockGridView() {
     { title: "Stock Date", slector: "STOORD_DATE", Wid: 220, date: true },
     { title: "Receiving", slector: "RECEIVING_NUMBER", Wid: 220 },
     { title: "ReceivingDate", slector:'RECEIVING_DATE', Wid: 220, date: true },
-    { title: "Warehouse", slector: "WAR_ID", Wid: 220 },
-    { title: "status", slector: "STOCK_ORD_STATUS", Wid: 250, status: "status" },
+    { title: "Warehouse", slector: "INVENTORY", Wid: 220 },
+    { title: "status", slector: "STOCK_ORD_STATUS",  Wid: 250, customComp:StockStatus, },
   ]);
   //   const [row, setRow] = useState([
   //     {
@@ -33,16 +35,16 @@ function StockGridView() {
   //       childrenData: [{}],
   //     },
   //   ]);
-  //   const [subHead, setSubHead] = useState([
-  //     { title: "Location", Wid: 250, customComp: ModalOpen },
-  //     { title: "Lot", Wid: 120 },
-  //     { title: "Expiry", Wid: 120, date: true },
-  //     { title: "MTH", Wid: 120 },
-  //     { title: "OHQty", Wid: 120 },
-  //     { title: "QtyRec'd", Wid: 120 },
-  //     { title: "StockQty", Wid: 120 },
-  //     { title: "Split", Wid: 120 },
-  //   ]);
+    const [subHead, setSubHead] = useState([
+      { title: "Location", Wid: 250, customComp: ModalOpen },
+      { title: "Lot", Wid: 120 },
+      { title: "Expiry", Wid: 120, date: true },
+      { title: "MTH", Wid: 120 },
+      { title: "OHQty", Wid: 120 },
+      { title: "QtyRec'd", Wid: 120 },
+      { title: "StockQty", Wid: 120 },
+      { title: "Split", Wid: 120 },
+    ]);
 
   const [data, setData] = useState();
   const [errorM, setErrorM] = useState();
@@ -74,7 +76,7 @@ function StockGridView() {
       RETURN_FLAG: "",
       ASSIGNED_FLAG: "N",
       COMPLETED_FLAG: "N",
-      INVENTORY: " Unassigned",
+      INVENTORY: " ",
       INVREC_ID: "",
       INVSTO_ID: "",
       RECEIVING_DATE: "",
@@ -116,74 +118,10 @@ function StockGridView() {
   console.log("data", data);
   return (
     <div className="flex flex-col">
-      {/* ASSIGNED_FLAG
-: 
-"N"
-COMPLETED_FLAG
-: 
-"N"
-INVENTORY
-: 
-" Unassigned"
-INVREC_ID
-: 
-264774
-INVSTO_ID
-: 
-281025
-RECEIVING_DATE
-: 
-"2024-01-05T17:41:19.657229+00:00"
-RECEIVING_NUMBER
-: 
-"REC000472"
-RETURN_DATE
-: 
-null
-RFP_DATE
-: 
-null
-RNUM
-: 
-487
-SALEORDRET_ID
-: 
-null
-SALEORDRET_NUMBER
-: 
-null
-STOCK_ORD_STATUS
-: 
-"Initiated"
-STOORD_COMPLETE_DATE
-: 
-null
-STOORD_DATE
-: 
-"2024-01-30T14:50:49.345908+00:00"
-STOORD_NUMBER
-: 
-"STO000525"
-SUPPLIER
-: 
-"Nutranex"
-SUPPLIER_INVOICE_NUMBER
-: 
-null
-TOTALROW
-: 
-488
-USER_ASSIGNED_TO
-: 
-null
-USE_ID_ASSIGNED_TO
-: 
-null
-VOID
-: 
-"N" */}
+     
       <div className="max-w-[1200px]">
-        <GridTable head={head} row={data?.Result} />
+        <GridTable head={head} row={data?.Result}
+        setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} />
       </div>
     </div>
   );

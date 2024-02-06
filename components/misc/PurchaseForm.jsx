@@ -1,19 +1,12 @@
 'use client'
 import React, { useState } from 'react'
-import GridTable from './GridTable/GridTable'
+
 import ModalOpen from './GridTable/ModalOpen'
-import PhoneNumber from './GridTable/PhoneNumber'
-import DropDownInput from './textinput/DropDownInput'
-import TextInput from './textinput/TextInput'
+
 import InputTextEut from './textinput/InputTextEut'
 import TextArea from './textinput/TextArea'
 import Tooltip from './tooltip/Tooltip'
-import DateTimePicker from './textinput/DatePicker'
-import { IoIosArrowDown, IoIosArrowUp, IoIosMore, IoIosSearch } from 'react-icons/io'
-import { BsPersonCircle } from 'react-icons/bs'
-import { FiFilter } from 'react-icons/fi'
-import { BiHide, BiSortAlt2 } from 'react-icons/bi'
-import { IoSettingsOutline } from 'react-icons/io5'
+
 import { MdEdit } from 'react-icons/md'
 import { FaRegEye } from "react-icons/fa";
 import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
@@ -30,41 +23,7 @@ const PurchaseForm = () => {
   const [itemPriority, setItemPriority] = useState("High")
 
   // console.log('==== log item ====',item);
-  const options = [
-    {
-      id: 1,
-      value: 'text',
-    },
-    {
-      id: 2,
-      chiledren: [
-        {
-          value: 'text2',
-        },
-        {
-          value: 'text3',
-        },
-      ],
-    },
-    {
-      id: 3,
-      value: 'text4',
-    },
-    {
-      id: 4,
-      chiledren: [
-        {
-          value: 'text2',
-        },
-        {
-          value: 'text3',
-        },
-        {
-          value: 'text3',
-        },
-      ],
-    },
-  ];
+  // 
 
   const getSlect = (e) => {
     setItem(e.target.value)
@@ -74,7 +33,7 @@ const PurchaseForm = () => {
 
       <div className='gap-2 flex  p-3 rounded-lg  '>
 
-        <div className='  border bg-gray-100 w-[75%] rounded-md h-100  ' >
+        <div className='  border bg-white w-[70%] rounded-md   ' >
 
           {/* <div className='flex w-full justify-between px-2 bg-white py-2 mb-2 rounded-t-md'>
             <div className='  flex w-[35%] py-2 '>
@@ -151,41 +110,27 @@ const PurchaseForm = () => {
             </div>
           </div> */}
           <PurchaseFormHeader/>
-          <div className='w-full  bg-white overflow-auto  h-full'>
-          <div className=' bg-white  h-full mt-2 pl-2  '>
+          <div className='w-full  bg-white overflow-auto  pb-2'>
+          <div className=' bg-white   mt-2 pl-2  '>
             {/* <GridTable head={head} row={row} setHead={setHead} /> */}
             <PurchaseGrid/>
           </div>
           </div>
         </div>
 
-        <div className='px-4 border  bg-white w-[25%] rounded-md shadow-md shadow-gray-200 py-5'  >
+        <div className='px-4 border  bg-white w-[30%] rounded-md shadow-md shadow-gray-200 py-5'  >
           <div className='flex items-center justify-between'>
             <div className='flex gap-2'>
               <Tooltip content='Edit'>
-                <MdEdit className='text-[25px] border  bg-purple-200 rounded-lg cursor-pointer p-1 text-purple-500 hover:text-white hover:bg-purple-500' />
+                <MdEdit className='text-[30px] border  bg-purple-200 rounded-lg cursor-pointer p-1 text-purple-500 hover:text-white hover:bg-purple-500' />
               </Tooltip>
               <Tooltip content='Perview'>
-                <FaRegEye className='text-[25px] rounded-lg border cursor-pointer p-1 bg-sky-100 text-sky-500 hover:text-white hover:bg-sky-400' />
+                <FaRegEye className='text-[30px] rounded-lg border cursor-pointer p-1 bg-sky-100 text-sky-500 hover:text-white hover:bg-sky-400' />
               </Tooltip>
               <Tooltip content='Export'>
-                <HiOutlineDocumentArrowDown className='text-[25px] cursor-pointer rounded-lg border p-1 bg-indigo-100 text-indigo-500 hover:text-white hover:bg-indigo-400' />
+                <HiOutlineDocumentArrowDown className='text-[30px] cursor-pointer rounded-lg border p-1 bg-indigo-100 text-indigo-500 hover:text-white hover:bg-indigo-400' />
               </Tooltip>
             </div>
-
-
-            {/* <div className='flex gap-2'>
-              <Tooltip  content='Edit'>
-              <MdEdit className='text-[25px] border  hover:bg-purple-200 rounded-lg cursor-pointer p-1 hover:text-purple-500 ' />
-              </Tooltip>
-              <Tooltip  content='Perview'>
-              <FaRegEye className='text-[25px] rounded-lg border cursor-pointer p-1 hover:bg-sky-100 hover:text-sky-500 ' />
-             </Tooltip>
-             <Tooltip  content='Export'>
-              <HiOutlineDocumentArrowDown className='text-[25px] cursor-pointer rounded-lg border p-1 hover:bg-indigo-100 hover:text-indigo-500 ' />
-          </Tooltip>
-            </div> */}
-
 
             <div className=''>
               <p className='H text-gray-800   text-[20px]'>PC0324445</p>
@@ -197,11 +142,11 @@ const PurchaseForm = () => {
           {/* <DateTimePicker isDisabled={true} /> */}
           <div className='flex justify-between w-full'>
             <div className='py-4 w-full  '>
-              <p className='py-3 text-gray-500 text-[14px]'>Status</p>
+              <p className='py-3 text-gray-900 text-[14px]'>Status</p>
               <div className='flex items-center'>
 
-                <div className={`p-1 h-fit w-[30px] rounded-full ${item == "High" ? "bg-orange-600" : item == "Medium" ? "bg-blue-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
-                <select className='outline-none' onChange={getSlect}>
+                <div className={`p-1 h-[30px] mr-2 rounded-full ${item == "High" ? "bg-orange-600" : item == "Medium" ? "bg-blue-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
+                <select className='outline-none text-[16px]' onChange={getSlect}>
                   <option value="Working on it">Working on it</option>
                   <option value="Done">Done</option>
                   <option value="Stuck">Stuck</option>
@@ -213,11 +158,11 @@ const PurchaseForm = () => {
             </div>
 
             <div className='py-4 w-full '>
-              <p className='py-3 text-gray-500 text-[14px]'>Priority</p>
+              <p className='py-3 text-gray-900 text-[14px]'>Priority</p>
               <div className='flex items-center '>
 
-                <div className={`p-1 h-fit w-[30px] rounded-full ${itemPriority == "High" ? "bg-orange-600" : itemPriority == "Medium" ? "bg-blue-400" : itemPriority == "Low" ? "bg-cyan-400" : itemPriority == "Working on it" ? "bg-yellow-400" : itemPriority == "Done" ? "bg-green-500" : itemPriority == "Stuck" ? "bg-red-600" : itemPriority == "initiated" ? "bg-zinc-400" : itemPriority == "issued" ? "bg-blue-600" : itemPriority == "Ready" ? "bg-indigo-500" : ""}`}></div>
-                <select className='outline-none' onChange={(e) => setItemPriority(e.target.value)}>
+                <div className={`p-1  mr-2 h-[30px] rounded-full ${itemPriority == "High" ? "bg-orange-600" : itemPriority == "Medium" ? "bg-blue-400" : itemPriority == "Low" ? "bg-cyan-400" : itemPriority == "Working on it" ? "bg-yellow-400" : itemPriority == "Done" ? "bg-green-500" : itemPriority == "Stuck" ? "bg-red-600" : itemPriority == "initiated" ? "bg-zinc-400" : itemPriority == "issued" ? "bg-blue-600" : itemPriority == "Ready" ? "bg-indigo-500" : ""}`}></div>
+                <select className='outline-none text-[16px] ' onChange={(e) => setItemPriority(e.target.value)}>
                   <option value="High">High</option>
                   <option value="Medium">Medium</option>
                   <option value="Low">Low</option>
@@ -229,18 +174,6 @@ const PurchaseForm = () => {
 
 
 
-          {/* <div className='bg-yellow-400 rounded-full flex justify-center my-2'>
-            <TooltipStatus content={"Working on it"}>
-
-              <div className=' w-full py-2 text-white text-center font-semibold '>Working on it</div>
-            </TooltipStatus>
-          </div>
-          <div className='bg-orange-600 rounded-full flex justify-center my-2'>
-            <TooltipStatus content={"High"}>
-
-              <div className=' w-full py-2 text-white text-center font-semibold '>High</div>
-            </TooltipStatus>
-          </div> */}
 
 
 
