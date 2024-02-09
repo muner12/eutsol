@@ -5,7 +5,7 @@ import { FiFilter } from 'react-icons/fi'
 import { IoIosArrowDown, IoIosArrowUp, IoIosMore, IoIosSearch } from 'react-icons/io'
 import { IoSettingsOutline } from 'react-icons/io5'
 
-const DiscoutnGroupFormHeader = () => {
+const DiscountGroupFormHeader = () => {
   return (
     <div className='flex w-full justify-between px-2 bg-white py-2 mb-2 rounded-t-md'>
     <div className='  flex w-[35%] py-2 '>
@@ -84,4 +84,4 @@ const DiscoutnGroupFormHeader = () => {
   )
 }
 
-export default DiscoutnGroupFormHeader
+export default DiscountGroupFormHeader
