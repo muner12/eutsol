@@ -17,6 +17,8 @@ import GridTest from '../../../../../../components/misc/GridTable/GridTable'
 import ModalOpen from '../../../../../../components/misc/GridTable/ModalOpen'
 import Tooltip from '../../../../../../components/misc/tooltip/Tooltip'
 import InputTextEut from '../../../../../../components/misc/textinput/InputTextEut'
+import DiscountGroupFormHeader from './DiscountGroupFormHeader'
+import DiscountGroupGrid from './DiscountGroupGrid'
 // import PhoneNumber from './GridTable/PhoneNumber'
 
 const DiscountGroupForm = ({data}) => {
@@ -142,11 +144,11 @@ const DiscountGroupForm = ({data}) => {
             </div>
           </div>
         </div> */}
-
+        <DiscountGroupFormHeader/>
         <div className='w-full  bg-white overflow-auto  pb-2'>
         <div className=' bg-white   mt-2 pl-2  '>
           {/* <GridTable head={head} row={row} setHead={setHead} /> */}
-          <PurchaseGrid/>
+          <DiscountGroupGrid/>
         </div>
         </div>
       </div>
