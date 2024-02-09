@@ -28,41 +28,15 @@ const DiscountGroupForm = ({data}) => {
       console.log(
         data
       )
-  const options = [
-    {
-      id: 1,
-      value: 'text',
-    },
-    {
-      id: 2,
-      chiledren: [
-        {
-          value: 'text2',
-        },
-        {
-          value: 'text3',
-        },
-      ],
-    },
-    {
-      id: 3,
-      value: 'text4',
-    },
-    {
-      id: 4,
-      chiledren: [
-        {
-          value: 'text2',
-        },
-        {
-          value: 'text3',
-        },
-        {
-          value: 'text3',
-        },
-      ],
-    },
-  ];
+      const [item, setItem] = useState("Working on it");
+      const [itemPriority, setItemPriority] = useState("High")
+    
+      // console.log('==== log item ====',item);
+      // 
+    
+      const getSlect = (e) => {
+        setItem(e.target.value)
+      }
   return (
     <div className=' bg-gray-100 rounded-lg'>
 
