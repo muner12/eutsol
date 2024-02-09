@@ -142,7 +142,7 @@ const DiscountGroupForm = ({data}) => {
             </div>
           </div>
         </div> */}
-        <PurchaseFormHeader/>
+
         <div className='w-full  bg-white overflow-auto  pb-2'>
         <div className=' bg-white   mt-2 pl-2  '>
           {/* <GridTable head={head} row={row} setHead={setHead} /> */}
