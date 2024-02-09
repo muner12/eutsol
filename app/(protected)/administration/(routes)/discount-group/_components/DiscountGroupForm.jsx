@@ -18,6 +18,7 @@ import ModalOpen from '../../../../../../components/misc/GridTable/ModalOpen'
 import Tooltip from '../../../../../../components/misc/tooltip/Tooltip'
 import InputTextEut from '../../../../../../components/misc/textinput/InputTextEut'
 import DiscoutnGroupFormHeader from './DiscountGroupFormHeader'
+import DiscountGroupGrid from './DiscountGroupGrid'
 // import PhoneNumber from './GridTable/PhoneNumber'
 
 const DiscountGroupForm = ({data}) => {
