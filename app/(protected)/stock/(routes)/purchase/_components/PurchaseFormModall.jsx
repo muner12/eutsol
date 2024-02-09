@@ -7,7 +7,7 @@ import PurchaseForm from '../../../../../../components/misc/PurchaseForm'
 import CustomModal from '../../../../../../components/misc/custommodal/CustomModal'
 import { TbDeviceIpadHorizontalPlus } from 'react-icons/tb';
 
-const PurchaseFormModall = ({index}) => {
+const PurchaseFormModall = ({row}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 console.log('modall index' , index);

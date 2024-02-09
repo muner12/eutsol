@@ -11,14 +11,16 @@ import StatusCell from '../../../../../../components/misc/GridTable/StatusCell'
 import DiscountGroupStatus from "./DiscountGroupStatus";
 
 const PurchaseBody = () => {
+
   let [error, sendRequest] = useApiFetch()
   const [data, setData] = useState()
+  const [row, setRow] =useState([{CODE:"13",NAME:"JOHN",DESCRIPTION:"DESCRIPTION",DISCOUNT_PERCENTAGE:"Y"}]);
       // const [head, setHead] = useState([{ title: 'Contact', slector:'Contact' ,  Wid: 250, filter: "textFilter" , customComp: ModalOpen }, { title: 'Priority', Wid: 100, status: "priority", slector:'Priority' ,  }, { title: 'order Date', Wid: 100 , slector:'orderDate'  ,  date:true }, { title: 'comp Date', Wid: 100 , slector:'compDate'  , date:true }, { title: 'Vander', slector:'Vander' ,  Wid: 100 }, { title: 'phone', slector:'phone' , Wid: 200 , customComp:PhoneNumber }, { title: 'email', slector:'email' , Wid: 200 }, { title: 'cost', slector:'cost' , Wid: 200 }, { title: 'status',slector:'status' , Wid: 150 , status: "status" ,}, { title: 'comments', slector:'comments' , Wid: 200 },])
      // const [head, setHead] = useState([{ title: 'Order number', slector: 'PO_NUMBER', Wid: 270, filter: "textFilter", Modal: PurchaseFormModall }, { title: 'Order Date', Wid: 250, slector: 'APPROVED_DATE', date: true }, { title: 'Comp Date', Wid: 250, slector: 'COMPLETED_DATE', date: true  }, { title: 'Vendor', slector: 'SUPPLIER', filter: "checkFilter" , checkFilterOptions:["Nutranex" , "Opening Entry" , "Maria Supplier" , "PAKISTANI SUPPLIERS"] ,  Wid: 250 }, { title: 'Cost', slector: 'TOTAL_COST', Wid: 200  ,customComp:PurchaseGridCost , filter: "NumberFilter" },{ title: 'Status', slector: 'PO_CURRENT_STATUS', Wid: 200 , Status:PurchaseStatus , filter: "checkFilter" , checkFilterOptions:["Completed" , "Issued to Vendor" , "Initiated" , "Void" , "Ready for Receiving"] },{ title: 'Comments', slector: 'REFERENCE_NUMBER', Wid: 200 }, ])
      const [head, setHead] = useState([
-        { title: 'CODE', slector: 'CODE', Wid: 280, filter: "textFilter", Modal:DiscountGroupModal}, 
+        { title: 'CODE', slector: 'CODE', Wid: 280, filter: "textFilter",Modal:DiscountGroupModal}, 
         { title: 'Name', Wid: 250, slector: 'NAME' },
-         { title: 'Description', Wid: 250, slector: 'DESCRIPTION', date: true  },
+         { title: 'Description', Wid: 180, slector: 'DESCRIPTION'},
           { title: 'Discount Percentage', slector: 'DISCOUNT_PERCENTAGE', filter: "checkFilter" , Wid: 250 }
           , { title: 'Status', slector: 'ACTIVE_FLAG', Wid: 200   ,Status:DiscountGroupStatus  }, ])
 
@@ -77,14 +79,14 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className=' w-full    '>
-        <div className=' h-full w-full  '>
+    <div className=''>
+        
           <div className=''>
-        <GridTable head={head} row={data?.Result} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
+        <GridTable head={head} row={row} setHead={setHead}    GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
         </div>
         <div className='my-5'>
         <GridTable head={head} row={compRow} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Completed' GridColor="green-400" GridColaps={true} />
-        </div>
+      
         </div>
     </div>
   )
