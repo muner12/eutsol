@@ -187,14 +187,17 @@ const DiscountGroupForm = ({data}) => {
 
 
 
+        <div className='flex'>
 
          <InputTextEut label="CODE" placeHolder='CODE' isDisabled={false} initialValue={data.CODE}/>
+         <input className='border'/>
+        </div>
           <InputTextEut label="Name" placeHolder='Name' isDisabled={true}  initialValue={data.NAME}/>
           <InputTextEut label="Discription" placeHolder='Discription' isDisabled={true}  initialValue={data.DESCRIPTION}/>
           <InputTextEut label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={true} initialValue={data.DISCOUNT_PERCENTAGE}/>
           
     
-        <TextArea label="Comments" placeHolder='Comments'/>
+        <TextArea label="Descripiton" placeHolder='Descripiton'/>
         {/* <TextInput label="Phone #" isDisabled={true} /> */}
         {/* <TextInput label="Fax" isDisabled={true} />
         <TextInput label="Email" isDisabled={true} /> */}
