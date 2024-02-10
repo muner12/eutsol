@@ -19,6 +19,7 @@ import Tooltip from '../../../../../../components/misc/tooltip/Tooltip'
 import InputTextEut from '../../../../../../components/misc/textinput/InputTextEut'
 import DiscountGroupFormHeader from './DiscountGroupFormHeader'
 import DiscountGroupGrid from './DiscountGroupGrid'
+import TextArea from '../../../../../../components/misc/textinput/TextArea'
 // import PhoneNumber from './GridTable/PhoneNumber'
 
 const DiscountGroupForm = ({data}) => {
@@ -188,9 +189,9 @@ const DiscountGroupForm = ({data}) => {
 
 
          <InputTextEut label="CODE" placeHolder='CODE' isDisabled={false} initialValue={data.CODE}/>
-          <InputTextEut label="Name" placeHolder='Name' isDisabled={true} />
-          <InputTextEut label="Discription" placeHolder='Discription' isDisabled={true} />
-          <InputTextEut label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={true} />
+          <InputTextEut label="Name" placeHolder='Name' isDisabled={true}  initialValue={data.NAME}/>
+          <InputTextEut label="Discription" placeHolder='Discription' isDisabled={true}  initialValue={data.DESCRIPTION}/>
+          <InputTextEut label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={true} initialValue={data.DISCOUNT_PERCENTAGE}/>
           
     
         <TextArea label="Comments" placeHolder='Comments'/>
