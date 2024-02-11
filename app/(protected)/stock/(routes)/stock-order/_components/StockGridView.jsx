@@ -6,6 +6,7 @@ import ModalOpen from "../../../../../../components/misc/GridTable/ModalOpen";
 import useApiFetch from "../../../../../../customHook/CustomHook";
 import StockStatus from './StockStatus';
 import CustomModal from '../../../../../../components/misc/custommodal/CustomModal'
+import StockFormModall from "./StockFormModall";
 import React, { useState, useEffect } from "react";
 
 function StockGridView() {
@@ -15,13 +16,18 @@ function StockGridView() {
       slector: "STOORD_NUMBER",
       Wid: 250,
       filter: "textFilter",
-      customComp: ModalOpen,
+      Modal: StockFormModall ,
     },
     { title: "Stock Date", slector: "STOORD_DATE", Wid: 220, date: true },
     { title: "Receiving", slector: "RECEIVING_NUMBER", Wid: 220 },
     { title: "ReceivingDate", slector:'RECEIVING_DATE', Wid: 220, date: true },
     { title: "Warehouse", slector: "INVENTORY", Wid: 220 },
-    { title: "status", slector: "STOCK_ORD_STATUS",  Wid: 250, customComp:StockStatus, },
+    { title: "Status", slector: "STOCK_ORD_STATUS",  Wid: 250, Status:StockStatus , filter: "checkFilter" , checkFilterOptions:["Full Transferred |Full Assigned",
+    "Initiated",
+    "NEW",
+    "Full Transferred |Not Assigned", 
+    "Partial Transferred |Not Assigned",
+    "Partial Transferred | Partial Assigned"] },
   ]);
   //   const [row, setRow] = useState([
   //     {
@@ -121,7 +127,9 @@ function StockGridView() {
      
       <div className="max-w-[1200px]">
         <GridTable head={head} row={data?.Result}
-        setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} />
+        setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal}
+        GridTitle='Active' GridColor="indigo-400" GridColaps={false}
+        />
       </div>
     </div>
   );

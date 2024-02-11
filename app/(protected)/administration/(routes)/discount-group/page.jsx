@@ -109,7 +109,7 @@ const DiscountGroupt = () => {
 
 
 
-  return <div className=' w-full    mt-30  '>
+  return <div className=' w-full h-[86vh]  mt-30  '>
     
 
 

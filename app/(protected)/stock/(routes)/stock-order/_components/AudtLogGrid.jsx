@@ -57,7 +57,7 @@ console.log("data", data);
   return (
     <div className=" bg-white min-h-[50%]"> 
       
-     < GridTable head={head} row={row} sethead={sethead}/>
+     < GridTable head={head} row={row} sethead={sethead} />
     </div>
   )
 }

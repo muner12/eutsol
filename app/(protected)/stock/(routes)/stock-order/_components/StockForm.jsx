@@ -1,13 +1,16 @@
-'use client'
-import React,{useState} from "react";
-import StockInnerGrid from "./StockInnerGrid";
+'use client';
+import GridTable from "../../../../../../components/misc/GridTable/GridTable";
+import React, { useState, useEffect } from "react";
+import useApiFetch from "../../../../../../customHook/CustomHook";
 import StockFormHeader from "./StockFormHeader";
 import Tooltip from "../../../../../../components/misc/tooltip/Tooltip";
 import InputTextEut from "../../../../../../components/misc/textinput/InputTextEut";
-
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { MdEdit } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
 import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
+import {  useSelector } from "react-redux";
 
 
 
@@ -17,12 +20,92 @@ function StockForm() {
   const getSlect = (e) => {
     setItem(e.target.value)
   }
+// dtat for fetching inner form
+let id = useSelector((state)=>state.stockSlices.formIndex);
+console.log("This is my id",id.INVSTO_ID)
+  const [data, setData] = useState();
+  const [errorM, setErrorM] = useState();
+
+  let [error, sendRequest] = useApiFetch();
+
+  const apiUrl = `${process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL}InventoryWeb/GetStockOrder`;
+  const [head, sethead] = useState([
+    { title: "Location", slector: "LOCATION", Wid: 250 },
+    { title: "Lot", slector: "LOT_NUMBER", Wid: 120 },
+    { title: "Expiry", slector: "EXPIRY_DATE", Wid: 120, date: true },
+    { title: "MTH", Wid: 120 },
+    { title: "Name", slector: "DESCRIPTION", Wid: 120 },
+    { title: "OH Qty", slector: "QTY_ONHAND", Wid: 120 },
+    { title: "Qty Recd", slector: "QTY_RECEIVED", Wid: 120 },
+    { title: "Stock Qty", slector: "QTY_ONHAND1", Wid: 120 },
+    { title: "SUK", slector: "SKU_MANUFACTURE", Wid: 120 },
+  ]);
+  const payload = {
+    data: {
+      INVSTO_ID: `${id.INVSTO_ID}`,
+      OFFSET: "+5.00",
+    },
+    action: "InventoryWeb",
+    method: "GetSaleOrder",
+    type: "rpc",
+    tid: "144",
+  };
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIyNjkzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluIiwiZXhwIjoxNzA5NTc0MTAyLCJpc3MiOiJwcmVjaXNldGVjLmNhIiwiYXVkIjoicHJlY2lzZXRlYy5jYSJ9.98afPFcw_qh1Y-U_jyDGGQ2Rj4GRZduB1rpAP7CwpJk";
+
+  function getAllTask(data) {
+    setData(data);
+    
+    setErrorM(error);
+  }
+
+  useEffect(() => {
+    sendRequest(apiUrl, "POST", payload, getAllTask, accessToken);
+  }, []);
+  console.log("data", data);
+
+  // Define validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    STOORD_NUMBER: Yup.string().required('Stock # is required'), 
+    RECEIVING_NUMBER: Yup.string().required('Receiving # is required'),
+    REC_DATE: Yup.date().required('Receiving Date is required'),
+
+    STO_DATE: Yup.date().required('STO Date is required'),
+    SUPPLIER_PHONE: Yup.string().required('Phone # is required'),
+    SUPPLIER_EMAIL: Yup.string().email('Invalid email address').required('Email is required'),
+    SUPPLIER: Yup.string().required('Supplier is required'),
+    SUPPLIER_INVOICE_NUMBER: Yup.string().required('Invoice is required'),
+    STOCK_REFERENCE_NUMBER: Yup.string().required('Ref is required'),
+    STOCK_NOTES: Yup.string(),
+    ADDRESS_1:Yup.string()
+  });
+  const formik = useFormik({
+    initialValues: {
+      STOORD_NUMBER:'',
+      RECEIVING_NUMBER: '',
+      REC_DATE: '',
+      ADDRESS_1:"",
+      STO_DATE: '',
+      SUPPLIER_PHONE: '',
+      SUPPLIER_EMAIL: '',
+      SUPPLIER: '',
+      SUPPLIER_INVOICE_NUMBER: '',
+      STOCK_REFERENCE_NUMBER: '',
+      STOCK_NOTES: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: values => {
+      // Handle form submission logic here
+      console.log(values);
+    },
+  });
+
   return (
     <div className=" w-full flex gap-2 ">
       <div className="relative w-3/4  p-4 bg-white shadow-sm shadow-gray-400 ">
         <StockFormHeader />
         <div className="overflow-x-auto overflow-y-auto min-h-[40vh]">
-          <StockInnerGrid />
+        <GridTable head={head} setHead={sethead} row={data?.Result.Table1} />
         </div>
       </div>
       <div className="w-1/4 h-auto p-4 bg-white shadow-sm shadow-gray-400 overflow-auto">
@@ -40,8 +123,9 @@ function StockForm() {
             </Tooltip>
           </div>
           <div className='flex items-center flex-col'>
-              <p className='H text-gray-800   text-[20px]'>SO0324445</p>
-              <p className='H text-gray-500  text-right '>January 24</p>
+              <p className='H text-gray-800   text-[20px]'> {data?.Result.Results[0]?.STOORD_NUMBER ?? 'ST034567'}</p>
+              <p className='H text-gray-500  text-right '>
+                {data?.Result.Results[0]?.STO_DATE ?? ''}</p>
 
             </div>
           </div>
@@ -80,38 +164,52 @@ function StockForm() {
           </div>
           {/* in put fields */}
           <div>
-            <InputTextEut label="SO #" placeHolder="SO #" isDisabled={true} />
-            <InputTextEut placeHolder="2024-01-30 8:36AM" isDisabled={true} />
-            <InputTextEut label="Rec #" placeHolder="Rec #" isDisabled={true} />
-            <InputTextEut placeHolder="2024-01-30 8:36AM" isDisabled={true} />
+          <form onSubmit={formik.handleSubmit} className="space-y-4">
+          <InputTextEut label="SO #" placeHolder="SO #" isDisabled={true} 
+          initialValue={data?.Result.Results[0]?.STOORD_NUMBER ?? ''}
+          />
+            <InputTextEut placeHolder="2024-01-30 8:36AM" isDisabled={true}
+             initialValue={data?.Result.Results[0]?.STO_DATE ?? ''}
+            />
+            <InputTextEut label="Rec #" placeHolder="Rec #" isDisabled={true}
+             initialValue={data?.Result.Results[0]?.RECEIVING_NUMBER ?? ''}
+             />
+            <InputTextEut placeHolder="2024-01-30 8:36AM" isDisabled={true} 
+            initialValue={data?.Result.Results[0]?.REC_DATE ?? ''}
+            />
             <InputTextEut
               label="Created By"
               placeHolder="Created By"
               isDisabled={true}
             />
-            <InputTextEut
-              label="PO Date"
-              placeHolder="PO Date"
-              isDisabled={true}
-            />
-            <InputTextEut label="Ref" placeHolder="Ref" isDisabled={true} />
+           
+         
             <InputTextEut
               label="Supplier"
               placeHolder="Supplier"
               isDisabled={true}
+              initialValue={data?.Result.Results[0]?.SUPPLIER ?? ''}
             />
             <InputTextEut
               label="Addres"
               placeHolder="Addres"
               isDisabled={true}
+              initialValue={data?.Result.Results[0]?.ADDRESS_1 ?? ''}
             />
             <InputTextEut
               label="Phone #"
               placeHolder="Phone #"
               isDisabled={true}
+              initialValue={data?.Result.Results[0]?.SUPPLIER_PHONE ?? ''}
             />
-            <InputTextEut label="Email" placeHolder="Email" isDisabled={true} />
-            <InputTextEut label="Notes" placeHolder="Notes" isDisabled={true} />
+            <InputTextEut label="Email" placeHolder="Email" isDisabled={true} 
+            initialValue={data?.Result.Results[0]?.SUPPLIER_EMAIL ?? ''}/>
+            <InputTextEut label="Ref" placeHolder="Ref"  
+            initialValue={data?.Result.Results[0]?.STOCK_REFERENCE_NUMBER ?? ''}/>
+            <InputTextEut label="Notes" placeHolder="Notes"
+            initialValue={data?.Result.Results[0]?.STOCK_NOTES ?? ''}  />
+          </form>
+           
           </div>
           {/*  */}
         </div>

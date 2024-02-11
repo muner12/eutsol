@@ -37,7 +37,7 @@ const DiscountGroupGrid = () => {
 
         setRow(data.Result.INV_PURCHASE_ORDER_DETAILS_WV)
 
-        console.log('data', data.Result.INV_PURCHASE_ORDER_DETAILS_WV);
+       // console.log('data', data.Result.INV_PURCHASE_ORDER_DETAILS_WV);
         // setErrorMessage(error)
     }
     useEffect(() => {

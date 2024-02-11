@@ -2,7 +2,7 @@
 'use client'
 import { BiMessageSquareAdd } from "react-icons/bi";
 import CustomModal from '../custommodal/CustomModal'
-import PurchaseForm from '../PurchaseForm'
+import PurchaseForm from '../../../app/(protected)/stock/(routes)/purchase/_components/PurchaseForm'
 import { GoHome } from "react-icons/go";
 
 
@@ -45,23 +45,25 @@ const Tooltip = ({ content, children }) => {
 
    
 
-   
+
 
   let Comp = Modall
   let [index , setIndex] = useState()
-    let singleRow=rowData[rowIndex];
+    // let singleRow=rowData[0];
+    // console.log(rowData)
+
 
   useEffect(()=>{
     setIndex(rowIndex)
    } , [data])
-
+   //console.log("muner ",index);
     return (
       <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
     <div className="flex">  {data}<span className={`ml-2 bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
         <Tooltip content="Open purchase Order Form">
           <div className=' flex items-center px-3 border-l'>
             {/* <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' /> */}
-          { Comp &&   <Comp index={singleRow}/>}
+          { Comp &&   <Comp index={index}/>}
           </div>
         </Tooltip>
         {/* <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/> */}

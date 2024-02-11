@@ -9,8 +9,8 @@ const DiscountGroupFormHeader = () => {
   return (
     <div className='flex w-full justify-between px-2 bg-white py-2 mb-2 rounded-t-md'>
     <div className='  flex w-[35%] py-2 '>
-      <button className='bg-cyan-700 rounded-md py-1 px-2 text-white'>+ New Purchase</button>
-      <div className='flex ml-4'>
+      <button className='bg-cyan-700 rounded-md py-1 px-2 text-white'>+ New Discount</button>
+      {/* <div className='flex ml-4'>
         <div className='bg-green-400 flex mr-2 p-[2px] h-full'>
 
         </div>
@@ -20,9 +20,9 @@ const DiscountGroupFormHeader = () => {
           <option value="mercedes">Mercedes</option>
           <option value="audi">Audi</option>
         </select>
-      </div>
+      </div> */}
     </div>
-    <div className=' flex w-[48%]   justify-end '>
+    {/* <div className=' flex w-[48%]   justify-end '>
       <div className='flex '>
         <div className='flex gap-4'>
           <div className='flex items-center gap-2'>
@@ -53,9 +53,9 @@ const DiscountGroupFormHeader = () => {
       </div>
 
 
-    </div>
+    </div> */}
     <div className='flex w-[17%]  justify-end gap-2'>
-      <div className='flex items-center'>
+      {/* <div className='flex items-center'>
         <div className='border h-fit flex items-center p-1'>
 
           <IoIosArrowDown className='text-[18px]' />
@@ -73,7 +73,7 @@ const DiscountGroupFormHeader = () => {
 
         <FiFilter className='text-[18px]' />
 
-      </div>
+      </div> */}
       <div className='flex items-center p-1'>
 
         <IoSettingsOutline className='text-[18px]' />

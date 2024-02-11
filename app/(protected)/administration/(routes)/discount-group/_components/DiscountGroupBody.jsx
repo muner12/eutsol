@@ -63,7 +63,7 @@ function getAllTask(data) {
 useEffect(()=>{
   data?.Result?.forEach((comp)=>{
     console.log('check========', comp.ACTIVE_FLAG );
-  if(comp?.ACTIVE_FLAG == "Y" || comp?.ACTIVE_FLAG == "N" ){
+  if(comp?.ACTIVE_FLAG == "N" ){
     setCompRow((prev) => [...prev, comp]);
     console.log('comp Row', compRow);
   }
@@ -85,7 +85,7 @@ useEffect(() => {
         <GridTable head={head} row={data?.Result} setHead={setHead}    GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
         </div>
         <div className='my-5'>
-        <GridTable head={head} row={compRow} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Completed' GridColor="green-400" GridColaps={true} />
+        <GridTable head={head} row={compRow} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Deactive' GridColor="green-400" GridColaps={true} />
       
         </div>
     </div>

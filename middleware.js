@@ -6,11 +6,12 @@ import {sessionStatus} from './app/session'
 const  protectedRoutes = ['/dashboard','/stock','/sales','/security','/administration','/stock/physical-count']
 // const token = localStorage.getItem(token);
 
-// const token = false;
-export function middleware(request) {
 
-  if (!sessionStatus) {
-    if (!sessionStatus && protectedRoutes.includes(request.nextUrl.pathname)){
+export function middleware(request) {
+  const token = sessionStatus();
+console.log(token)
+  if (!token) {
+    if (!token && protectedRoutes.includes(request.nextUrl.pathname)){
       const orignUrl = new URL('/login',request.url);
       return NextResponse.redirect(orignUrl.toString())
         }

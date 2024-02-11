@@ -40,8 +40,8 @@ const Tooltip = ({ content, children }) => {
 
 
   function DiscountGroupModal({ data , length , child ,index }) {
-    
-   
+    console.log('DG', data,length,index);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleOpenModal = () => {
       setIsModalOpen(true);
@@ -59,7 +59,7 @@ const Tooltip = ({ content, children }) => {
     return (
       <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
     <div className="flex">  {data}<span className={`ml-2 bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
-        <Tooltip content="Open purchase Order Form">
+        <Tooltip content="Open Discount Group">
           <div className=' flex items-center px-3 border-l'>
             <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' />
           </div>
