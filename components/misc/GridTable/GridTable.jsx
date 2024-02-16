@@ -12,7 +12,7 @@ import GridCheckFilter from './GridCheckFilter'
 import { TiArrowUnsorted } from "react-icons/ti";
 import GridDateFilter from './GridDateFilter'
 
-const GridTest = ({ head, row, subHead, setHead, setSubHead , GridTitle , GridColor , GridColaps}) => {
+const GridTest = ({ head, row, subHead, setHead, setSubHead , GridTitle , GridColor , GridColaps , colaps , setColaps , colapsfunc}) => {
     const [dropDown, setDropDown] = useState()
     const [cells, setCells] = useState(0)
     // const [head, setHead] = useState([{ title: 'Contact', Wid: 200, filter: "textFilter" }, { title: 'Priority', Wid: 100, status: "priority", customComp: true }, { title: 'orderDate', Wid: 100 }, { title: 'compDate', Wid: 100 }, { title: 'Vander', Wid: 100 }, { title: 'phone', Wid: 200 }, { title: 'email', Wid: 200 }, { title: 'cost', Wid: 200 }, { title: 'status', Wid: 150 , status: "status" , customComp: true}, { title: 'comments', Wid: 200 },])
@@ -27,9 +27,9 @@ const GridTest = ({ head, row, subHead, setHead, setSubHead , GridTitle , GridCo
 
     const [draggedIndex, setDraggedIndex] = useState(null);
     const [rowData, setRowData] = useState()
-    const [colaps , setColaps] = useState(false)
+    // const [colaps , setColaps] = useState(false)
     const [tableColor , setTableColor] = useState()
-    console.log('table color' , tableColor);
+    // console.log('table color' , tableColor);
     // console.log("cells" , cells);
     // console.log('check Wid Data===', totalWid);
 
@@ -104,14 +104,14 @@ setColaps(GridColaps)
 
     return (
         <div>
-            <div onClick={()=>setColaps(!colaps)} className={`flex   text-${tableColor} cursor-pointer items-center p-2  group`}>
+            <div onClick={colapsfunc} className={`flex   text-${tableColor} cursor-pointer items-center p-2  group`}>
                 <div>
                     <MdOutlineKeyboardArrowDown className=' text-[20px] mr-1' />
                 </div>
                 <p className=' font-semibold H text-[18px]' >{GridTitle}</p>
                 <div><p className='text-[14px] text-gray-400 ml-2 hidden group-hover:block '>{rowList} Products</p></div>
             </div>
-            <div className=' rounded-lg border h-fit w-fit    '>
+            <div className=' rounded-lg border h-fit w-fit '>
 
                 <div className={`w-full ${cells == 0 ? "hidden" : "block"} h-fit  `}>
                     <div style={{ minWidth: `${totalWid}px`, display: "flex", justifyContent: "start" }} className={` rounded-tl-lg   border-b  `}>
@@ -120,12 +120,12 @@ setColaps(GridColaps)
 
                         {
                             head?.map((data, i) => (
-                                <div>
+                                <div key={i}>
 
                                     <div
                                         style={{ minWidth: `${data.Wid}px` }}
                                         key={i}
-                                        className={` group border-x py-1  text-[14px]  text-gray-500 text-center  flex justify-center  items-center  size-full h-auto `}
+                                        className={` group border-x py-1 ${data.title == '' && 'hidden' } text-[14px]  text-gray-500 text-center  flex justify-center  items-center  size-full h-auto `}
                                         draggable
                                         onDragStart={() => handleDragStart(i)}
                                         onDragOver={() => handleDragOver(i)}
@@ -186,7 +186,7 @@ setColaps(GridColaps)
                                 const subLentgh = rowData?.childrenData?.length
 
                                 return (
-                                    <div className='w-full  hover:bg-gray-50 hover:shadow-lg '>
+                                    <div key={rowI} className='w-full  hover:bg-gray-50 hover:shadow-lg '>
 
 
                                         <div style={{ minWidth: `${totalWid}px`, display: "flex", justifyContent: "start" }} className={` `}>
@@ -205,7 +205,7 @@ setColaps(GridColaps)
 
 
                                                 return (
-                                                    <div className='bg-red-30 flex size-full  h-auto  '>
+                                                    <div key={headerIndex} className='bg-red-30 flex size-full  h-auto  '>
                                                         {headerIndex == 0 && <div className={`p-[2px] h-full   bg-${tableColor} `}></div>}
                                                         {headerIndex == 0 && <div className='border border-l-0 flex justify-center items-center px-[6px] '><input type="checkbox" /></div>}
 
@@ -222,7 +222,7 @@ setColaps(GridColaps)
                                                                     :
                                                                     header.customComp && headerIndex != 0 ? <div onDoubleClick={editActive} style={{ minWidth: `${header.Wid}px` }} className='flex w-full  h-full border'> {header.slector === activeEdit?.title && rowI === activeEdit?.rowIndex ? <input placeholder={rowData[header.slector]} className='w-full text-gray-500 text-[14px] ' type="text" /> : <header.customComp data={rowData[header.slector]} index={rowI} rowData={rowData} />} </div>
                                                                         :
-                                                                        <div onDoubleClick={editActive} style={{ minWidth: `${header.Wid}px` }} className={` ${headerIndex != 0 ? "px-2 justify-center " : "overflow-hidden"} w-full flex items-center  text-gray-500 h-full border py-1 group `} >
+                                                                        <div onDoubleClick={editActive} style={{ minWidth: `${header.Wid}px` }} className={` ${headerIndex != 0 ? "px-2 justify-center " : "overflow-hidden"} ${header.title == '' && 'hidden'} w-full flex items-center  text-gray-500 h-full border py-1 group `} >
                                                                             {/* {headerIndex == 0 && rowData.childrenData ? */}
                                                                             <div className={` ${headerIndex == 0 ? "flex" : "hidden"}`}>
                                                                                 <div className={` ${headerIndex == 0 && rowData.childrenData ? "group-hover:visible" : ""} invisible  text-gray-400`}> {dropDown == rowI ? <RiArrowDropUpLine onClick={() => setDropDown(-1)} className='text-[25px]' /> : <RiArrowDropDownLine onClick={() => setDropDown(rowI)} className='text-[25px]' />}</div>

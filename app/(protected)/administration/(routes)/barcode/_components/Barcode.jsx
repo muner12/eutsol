@@ -4,7 +4,7 @@ import { React, useState } from 'react'
 import Image from 'next/image';
 import styles from "./styles.module.css";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import DropDownInput from '../../../../../../components/misc/textinput/DropdownInput';
+
 const Barcode = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Option 1');
@@ -126,7 +126,7 @@ const Barcode = () => {
                 {isOpen2 && (
                   <div className="p-1 my-1 w-full bg-white border rounded absolute z-10">
                     {values.map((value, index) => (
-                      <div className={`cursor-pointer ${selectedValue2 === `Col ${value.cols} X Row ${value.row}` ? 'hover:border hover:rounded hover:border-green-300  hover:bg-green-300 hover:text-black' : 'hover:border hover:rounded hover:border-gray-300  hover:bg-gray-300 hover:text-black'}`} key={index} onClick={() => onColsRowsChange(`Col ${value.cols} X Row ${value.row}`)}>
+                      <div  className={`cursor-pointer ${selectedValue2 === `Col ${value.cols} X Row ${value.row}` ? 'hover:border hover:rounded hover:border-green-300  hover:bg-green-300 hover:text-black' : 'hover:border hover:rounded hover:border-gray-300  hover:bg-gray-300 hover:text-black'}`} key={index} onClick={() => onColsRowsChange(`Col ${value.cols} X Row ${value.row}`)}>
                         {`Col ${value.cols} X Row ${value.row}`}
                       </div>
                     ))}

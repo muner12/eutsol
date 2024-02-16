@@ -1,5 +1,9 @@
-import { sessionStatus} from "../utils/session";
-import { redirect } from "next/navigation";
-if(!sessionStatus){
-  redirect('/login')
+import React from 'react'
+
+function page() {
+  return (
+    <div>page</div>
+  )
 }
+
+export default page

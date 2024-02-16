@@ -12,7 +12,7 @@ export default function GridDropdown() {
 
     const [filterFields, setFilterFields] = useState([{ slect: "", text: "", nextCondition: "" }])
 
-    console.log("filter check", filterFields);
+    // console.log("filter check", filterFields);
     const setCheck = (index, nextCondition) => {
 
         const lnth = filterFields.length - 1
@@ -22,7 +22,7 @@ export default function GridDropdown() {
 
 
             setFilterFields((prev) => [...prev, { slect: "", text: "", nextCondition }]);
-            console.log("filter check", filterFields);
+            // console.log("filter check", filterFields);
 
 
         }
@@ -69,7 +69,7 @@ export default function GridDropdown() {
 
                             let num = index + 1;
 
-                            return <div className="py-1 ">
+                            return <div key={index} className="py-1 ">
                                 <div>
 
                                     <div

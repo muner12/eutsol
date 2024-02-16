@@ -8,7 +8,7 @@ function StockFormHeader() {
   return (
     <div className='flex w-full justify-between px-2 bg-white py-2 mb-2 rounded-t-md'>
     <div className='  flex w-[35%] py-2 '>
-      <button className='bg-cyan-700 rounded-md py-1 px-2 text-white'>+ New Stock Order</button>
+      <button className='bg-cyan-700 rounded-md py-1 px-2 text-white'>Transfer</button>
       <div className='flex ml-4'>
         <div className='bg-green-400 flex mr-2 p-[2px] h-full'>
 

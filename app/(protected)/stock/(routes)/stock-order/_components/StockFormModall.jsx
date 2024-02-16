@@ -37,7 +37,7 @@ const StockFormModall = ({index}) => {
   return (
     <div>
         <TbDeviceIpadHorizontalPlus onClick={handleOpenModal} className='text-[25px] text-gray-500' />
-        <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/>
+        <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading = "Stock Order"/>
 
         </div>
   )

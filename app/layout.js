@@ -5,11 +5,7 @@ import ReduxStoreProvider from '../redux/provider'
 import Sidebar from "../components/misc/Sidebar/Sidebar"
 import MobBotNav from '../components/misc/mobailBottomNav/MobaiBottomNav'
 import Header from '../components/misc/header/Header'
-import { useRouter } from 'next/navigation'
 
-
-
-import { sessionStatus} from "./(auth)/login/_components/LoginForm";
 
 
 // const inter = Inter({ subsets: ['latin'] })

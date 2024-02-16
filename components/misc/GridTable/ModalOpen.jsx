@@ -22,8 +22,8 @@ const Tooltip = ({ content, children }) => {
     return (
       <div className="group ">
         {isTooltipVisible && (
-          <div className="absolute z-10 bg-gray-600 text-white w-30 p-4 mt-5 rounded-md text-sm shadow-lg  ">
-            <div className="">{content}</div>
+          <div className="absolute z-10 bg-gray-600 text-white w-[170px] p-4 rounded-md text-sm shadow-lg mt-8">
+            <div>{content}</div>
           </div>
         )}
         <div
@@ -40,26 +40,24 @@ const Tooltip = ({ content, children }) => {
 
 
 
-  function ModalOpen({ data , length , child , Modall , rowIndex ,rowData }) {
+  function ModalOpen({ data , length , child , Modall , rowIndex  }) {
 
 
    
 
-
+   
 
   let Comp = Modall
   let [index , setIndex] = useState()
-    // let singleRow=rowData[0];
-    // console.log(rowData)
 
 
   useEffect(()=>{
     setIndex(rowIndex)
    } , [data])
-   //console.log("muner ",index);
+
     return (
       <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
-    <div className="flex">  {data}<span className={`ml-2 bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
+    <div className="flex">  {data} <span className={`ml-2 ${length == 0 && 'hidden'} bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
         <Tooltip content="Open purchase Order Form">
           <div className=' flex items-center px-3 border-l'>
             {/* <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' /> */}

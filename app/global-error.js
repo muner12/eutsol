@@ -1,11 +1,11 @@
 "use client";
 
-import { Html } from "next/document";
+// import { Html } from "next/document";
 import React from "react";
-import { RxCross2 } from "react-icons/rx";
+// import { RxCross2 } from "react-icons/rx";
 
 
-export default function Error({ error, reset }) {
+export default function Error({  reset }) {
   return (
     <html>
         <body>

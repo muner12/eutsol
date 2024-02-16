@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState, useRef } from 'react'
 import ModalOpen from './ModalOpen'
+import StatusCell from './StatusCell'
 
 
 
@@ -123,7 +124,7 @@ const SubGrid = ({ dropDown, Subdata, head , setHead }) => {
                         {
                             head?.map((data, i) => {
                                 return (
-                                    <div className=' flex size-full  '>
+                                    <div key={i} className=' flex size-full  '>
                                         {i == 0 && <div className='p-[2px] h-ful group-hover:bg-green-400  bg-green-300 transition-colors '></div>}
                                         {i == 0 && <div className='border border-l-0 flex justify-center items-center px-[6px] '><input type="checkbox" /></div>}
 
@@ -161,7 +162,7 @@ const SubGrid = ({ dropDown, Subdata, head , setHead }) => {
                         row?.map((rowData, rowI) => {
 
                             return (
-                                <div className='w-full  border-x border-l-0 hover:bg-gray-50 hover:shadow-lg '>
+                                <div key={rowI} className='w-full  border-x border-l-0 hover:bg-gray-50 hover:shadow-lg '>
                                     <div className=' absolute border-b z border-green-400 w-6 p-[1px] translate-y-3 -translate-x-[25px] rounded-bl-lg'></div>
 
                                     <div style={{ minWidth: `${totalWid}px`, display: "flex", justifyContent: "start" }} className={` `}>
@@ -178,7 +179,7 @@ const SubGrid = ({ dropDown, Subdata, head , setHead }) => {
                                             }
 
                                             return (
-                                                <div className=' flex size-full h-auto '>
+                                                <div key={headerIndex} className=' flex size-full h-auto '>
                                                     {headerIndex == 0 && <div className='p-[2px] h-full   bg-green-400'></div>}
                                                     {headerIndex == 0 && <div className='border border-l-0 flex justify-center items-center px-[6px] '><input type="checkbox" /></div>}
 

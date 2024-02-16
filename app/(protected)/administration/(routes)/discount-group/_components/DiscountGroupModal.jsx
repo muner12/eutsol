@@ -5,7 +5,7 @@ import { BiMessageSquareAdd } from "react-icons/bi";
 import { GoHome } from "react-icons/go";
 
 import CustomModal from "../../../../../../components/misc/custommodal/CustomModal";
-
+import DiscountGroupCustomModal from "./DiscountGroupCustomModal";
 
 import React, { useState } from 'react'
 import PurchaseForm from "../../../../../../components/misc/PurchaseForm";
@@ -40,7 +40,7 @@ const Tooltip = ({ content, children }) => {
 
 
   function DiscountGroupModal({ data , length , child ,index }) {
-    console.log('DG', data,length,index);
+    
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleOpenModal = () => {
@@ -65,7 +65,7 @@ const Tooltip = ({ content, children }) => {
           </div>
         </Tooltip>
       
-        <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Discount Group"/>
+        <DiscountGroupCustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Discount Group"/>
 
       </div>
     );

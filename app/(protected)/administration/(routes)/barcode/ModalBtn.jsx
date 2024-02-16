@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 // import SaveButton from '../../components/misc/buttons/SaveButton';
 
 import SaveButton from '../../../../../components/misc/buttons/SaveButton'; 
-import ModalWithTabs from '../../../../../components/misc/modal/Modal';
+// import ModalWithTabs from '../../../../../components/misc/modal/Modal';
 
 
 function ModalBtn (){
@@ -18,11 +18,11 @@ function ModalBtn (){
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-    const tabs = [
-        { label: <div className='text-sm text-[#7f8089]'>By Sku</div>, content: <div><BySku /></div> },
-        { label: <div className='text-sm text-[#7f8089]'>By Lot</div>, content: <div><ByLot/></div> },
-        { label: <div className='text-sm text-[#7f8089]'>By Location</div>, content: <div><ByLocation/></div> },
-    ];
+    // const tabs = [
+    //     { label: <div className='text-sm text-[#7f8089]'>By Sku</div>, content: <div><BySku /></div> },
+    //     { label: <div className='text-sm text-[#7f8089]'>By Lot</div>, content: <div><ByLot/></div> },
+    //     { label: <div className='text-sm text-[#7f8089]'>By Location</div>, content: <div><ByLocation/></div> },
+    // ];
 
     const modalbuttons = [
         {
@@ -39,7 +39,7 @@ function ModalBtn (){
     ];
     return (
         <div>
-                 <button onClick={handleOpenModal} className="mainBarcodeContent text-blue-500 hover:underline">
+                 {/* <button onClick={handleOpenModal} className="mainBarcodeContent text-blue-500 hover:underline">
                 Open Modal
             </button>
 
@@ -51,7 +51,7 @@ function ModalBtn (){
                 onOpenModal={handleOpenModal}
                 onCloseModal={handleCloseModal}
                 modalbuttons={modalbuttons}
-            />
+            /> */}
         </div>
     )
 }

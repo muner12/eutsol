@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Image from 'next/image'
 function ReceivingList() {
   return (
     <div className='flex flex-col'>
@@ -7,7 +7,7 @@ function ReceivingList() {
       <div className="flex items-center justify-between w-[90%]  m-auto py-2">
         <div className="flex items-center gap-2">
           <div className="w-[3.2rem] h-[3.2rem] p-2  border rounded-md bg-white border-gray-500 ">
-            <img className="" src="/icons/recevinglist-icon.png" alt="" />
+            <Image width='auto' height='auto' className="" src="/icons/recevinglist-icon.png" alt="" />
           </div>
           <div>
             <h1 className="text-xl font-bold">Receiving List</h1>

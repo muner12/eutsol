@@ -12,7 +12,7 @@ export default function GridCheckFilter({ options }) {
 
     const [filterFields, setFilterFields] = useState([{ slect: "", text: "", nextCondition: "" }])
 
-    console.log("filter check", filterFields);
+    // console.log("filter check", filterFields);
     const setCheck = (index, nextCondition) => {
 
         const lnth = filterFields.length - 1
@@ -22,7 +22,7 @@ export default function GridCheckFilter({ options }) {
 
 
             setFilterFields((prev) => [...prev, { slect: "", text: "", nextCondition }]);
-            console.log("filter check", filterFields);
+            // console.log("filter check", filterFields);
 
 
         }
@@ -69,7 +69,7 @@ export default function GridCheckFilter({ options }) {
 
                             let num = index + 1;
 
-                            return <div className="py-1 ">
+                            return <div key={index} className="py-1 ">
                                 <div>
 
                                     <div
@@ -85,10 +85,10 @@ export default function GridCheckFilter({ options }) {
 
                                             
                                             {
-                                                options?.map((data) => {
+                                                options?.map((data , i) => {
                                                     return (
                                                         // <li selected value="Contain">{data}</li>
-                                                        <div className='my-1' >
+                                                        <div key={i} className='my-1' >
                                                             <input type="checkbox" className='mr-2' />
                                                             <label className='text-gray-500' htmlFor="">{data}</label>
                                                         </div>

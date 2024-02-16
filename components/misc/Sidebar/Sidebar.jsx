@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   mouseEvnt,
   stockPageEvnt,
@@ -84,6 +86,7 @@ const Sidebar = () => {
   };
   const route = usePathname();
   const showsidebar = route == '/login' ? false : true;
+  const navigate = useRouter(); 
   return (
     <div className={`${showsidebar ? '' :"hidden"}`}>
       <div className=" z-10 bg-[#E1EFF2] lg:flex  md:flex  sm:flex  hidden   ">
@@ -109,11 +112,13 @@ const Sidebar = () => {
                   >
                     {/* <MdNavigateNext className="text-[22px]  " /> */}
                     <LuLayoutDashboard className="text-[20px] mr-2 group-hover:text-indigo-500" />
-                    <p
+                    <Link 
+                    //onClick={()=>navigate.push('./dashboard')}
+                    href='/dashbord'
                       className={`font-bold text-[14px] group-hover:text-indigo-500 `}
                     >
                       Dashboard
-                    </p>
+                    </Link>
                   </div>
                 </div>
                 <div className={`my-[25px]  `}>
@@ -236,7 +241,7 @@ const Sidebar = () => {
           </div>
         </div>
         <div className={` -translate-x-3 mt-[13vh] h-fit w-[10px] `}>
-          <span className="    ">
+          <span className="">
             {sideBarWidth ? (
               <MdNavigateBefore
                 onClick={() => setSideBarWidth(false)}

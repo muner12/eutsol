@@ -8,7 +8,7 @@ const AgStatusCellRound = (props) => {
         <div className=' grid grid-cols-2 '>
             <div className='w-full bg-slate-700'>
                 h
-                <div className={`${data == "Completed" ? "bg-green-400" : data == "in Progress" ? "bg-yellow-400" : data == 'Stuck' ? "bg-red-400" : ""} p-1 w-full text-indigo-400 `}><FaCheck /> j </div>
+                <div className={`${data == "Completed" ? "bg-green-400" : data == "in Progress" ? "bg-yellow-400" : data == 'Stuck' ? "bg-red-400" : data == 'buck' ? "text-indigo-400 " : ""} p-1 w-full  text-pink-400 bg-pink-400 `}><FaCheck /> j </div>
             </div>
             <span className=''>{data}</span>
         </div>

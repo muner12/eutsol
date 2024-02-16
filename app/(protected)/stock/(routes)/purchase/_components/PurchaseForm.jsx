@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import ModalOpen from '../../../../../../components/misc/GridTable/ModalOpen'
 
@@ -13,112 +13,242 @@ import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
 import TooltipStatus from './PurchaseTooltip'
 import PurchaseGrid from './PurchaseGrid'
 import PurchaseFormHeader from './PurchaseFormHeader'
+import useApiFetch from '../../../../../../customHook/CustomHook'
+import { useSelector, useDispatch } from "react-redux";
+import { updatePurchaseNotes ,  subGridset , setPurchaseDetails , setUpdatePurchaseDetail , setUpdatePurchaseOrder , setLotList , setProductOrederUpdate} from '../redux/Purchase.slice'
+import moment from 'moment';
+
+// import TooltipStatus from './PurchaseTooltip'
+
+
 // import PhoneNumber from './GridTable/PhoneNumber'
 
 const PurchaseForm = () => {
 
-  const [head, setHead] = useState([{ title: 'SubItem', slector: 'SubItem', Wid: 250, customComp: ModalOpen }, { title: 'Part', slector: 'Part', Wid: 120 }, { title: 'Cost', slector: 'Cost', Wid: 100 }, { title: 'LastCost', slector: 'LastCost', Wid: 120 }, { title: 'OhQty', slector: 'OhQty', Wid: 120 }, { title: 'OrderQty', slector: 'OrderQty', Wid: 120 }, { title: 'UOM', slector: 'UOM', Wid: 120 }, { title: 'Conv', slector: 'Conv', Wid: 120 }, { title: 'CaseQty', slector: 'CaseQty', Wid: 120 }, { title: 'Split', slector: 'Split', Wid: 120 }, { title: 'Batch', slector: 'Batch', Wid: 120 }, { title: 'Expiry', slector: 'Expiry', Wid: 120 }])
-  const [row, setRow] = useState([{ SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" }, { SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" },])
+  const [formData, setFormData] = useState()
   const [item, setItem] = useState("Working on it");
   const [itemPriority, setItemPriority] = useState("High")
+  let [error, sendRequest] = useApiFetch()
+  const [inputValue, setInputValue] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email ,setEmail] = useState()
+  const [notes , setNotes] = useState()
+  // console.log('data-=-=-=-=-=-', formData);
 
+
+  const dispatch = useDispatch()
+
+
+  const rowId = useSelector((state) => state.PurchaseSlices.formIndex)
+  const postPurchaseOrder = useSelector((state) => state.PurchaseSlices.postPurchaseOrder)
+
+console.log('check postPurchaseOrder' , postPurchaseOrder);
+  // console.log('row Id ' , rowId);
+
+  const payloadLot = {
+    data: {
+      PURORD_ID: rowId,
+    },
+    action: "InventoryWeb",
+    method: "GetPurchaseLotList",
+    type: "rpc",
+    tid: "144",
+  };
+
+  const payload = {
+    data: {
+      PURORD_ID: rowId
+    },
+    action: "InventoryWeb",
+    method: "GetPurchaseOrder",
+    type: "rpc",
+    tid: "144",
+    username: "admin"
+  }
+  const apiUrl = `${process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL}InventoryWeb/GetPurchaseOrder`
+  const apiUrlLot = `${process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL}InventoryWeb/GetPurchaseLotList`;
+
+  const token = localStorage.getItem('tokenSession')
+
+  // const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIyNjkzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluIiwiZXhwIjoxNzA5NDc0ODQwLCJpc3MiOiJwcmVjaXNldGVjLmNhIiwiYXVkIjoicHJlY2lzZXRlYy5jYSJ9._B2objEkiNbmbdcXdHjNtlqCq-RkzcCln65W9cBFQzY"
+
+  function getAllTask(data) {
+
+    // console.log('check data ====' , data);
+
+    dispatch(subGridset(data.Result.INV_PURCHASE_ORDER_DETAILS_WV))
+    dispatch(setPurchaseDetails(data.Result.INV_PURCHASE_ORDERS_WV[0]))
+    setFormData(data.Result.INV_PURCHASE_ORDERS_WV[0])
+    setInputValue(data.Result.INV_PURCHASE_ORDERS_WV[0]?.REFERENCE_NUMBER)
+    setPhone(data.Result.INV_PURCHASE_ORDERS_WV[0]?.PHONE_1)
+    setEmail(data.Result.INV_PURCHASE_ORDERS_WV[0]?.EMAIL)
+    setNotes(data.Result.INV_PURCHASE_ORDERS_WV[0]?.NOTES)
+    
+    
+
+    const getorderFilter = data.Result.INV_PURCHASE_ORDERS_WV.map((items)=>{
+      const {
+        APPROVED_FLAG,
+        COMPLETE_FLAG,
+        ETA_DATE,
+        FNZ_FLAG,
+        FNZ_USE_ID,
+        NOTES,
+        PO_DATE,
+        PREPARED_DATE,
+        PURORD_ID,
+        REFERENCE_NUMBER,
+        TERMS_CONDITION,
+        USE_ID_APRVD_BY,
+        USE_ID_COMPT_BY,
+        USE_ID_PREPARED_BY,
+        VEN_ID,
+        VOID_FLAG,
+        VOID_NOTES,
+        WAR_ID,
+
+
+
+      } = items
+
+      return  {
+        APPROVED_FLAG,
+        COMPLETE_FLAG,
+        ETA_DATE,
+        FNZ_FLAG,
+        FNZ_USE_ID,
+        NOTES,
+        PO_DATE,
+        PREPARED_DATE,
+        PURORD_ID,
+        REFERENCE_NUMBER,
+        TERMS_CONDITION,
+        USE_ID_APRVD_BY,
+        USE_ID_COMPT_BY,
+        USE_ID_PREPARED_BY,
+        VEN_ID,
+        VOID_FLAG,
+        VOID_NOTES,
+        WAR_ID,
+      }
+    })
+
+    const getFilter = data.Result.INV_PURCHASE_ORDER_DETAILS_WV.map((items)=>{
+   const   {
+        PURORDDET_ID,
+        PURORD_ID,
+        PAR_ID,
+        // UOM_REORDER,
+        DESCRIPTION,
+        CATALOG_NUMBER,
+        QUANTITY,
+        DELETED_FLAG,
+        WORORD_ID,
+        COST,
+        USE_ID,
+        LOT_NUMBER,
+        // EXPIRY_DATE,
+        QUARANTINE_FLAG,
+        READY_FOR_RECEIVING_FLAG,
+        INVPARLOT_ID,
+        VENDOR_QUANTITY,
+        // NON_STOCK_ITEM_PURCHASE_ORDER_FLAG
+      } = items
+
+      return  {
+        PURORDDET_ID,
+        PURORD_ID,
+
+        PAR_ID,
+
+        // UOM_REORDER,
+
+        DESCRIPTION,
+
+        CATALOG_NUMBER,
+
+        QUANTITY,
+
+        DELETED_FLAG,
+
+        WORORD_ID,
+
+        COST,
+
+        USE_ID,
+
+        LOT_NUMBER,
+
+        // EXPIRY_DATE,
+
+        QUARANTINE_FLAG,
+
+        READY_FOR_RECEIVING_FLAG,
+
+        INVPARLOT_ID,
+
+        VENDOR_QUANTITY,
+
+        // NON_STOCK_ITEM_PURCHASE_ORDER_FLAG
+      }
+    })
+dispatch(setUpdatePurchaseDetail(getFilter ))
+dispatch(setUpdatePurchaseOrder(getorderFilter))
+
+    // setErrorMessage(error)
+  }
+
+  const getAllLot = (data) =>{
+dispatch(setLotList(data.Result))
+  }
+  useEffect(() => {
+    sendRequest(apiUrl, 'POST', payload, getAllTask, token)
+
+    sendRequest(apiUrlLot, "POST", payloadLot, getAllLot, token);
+
+
+  }, []);
   // console.log('==== log item ====',item);
   // 
 
   const getSlect = (e) => {
     setItem(e.target.value)
   }
+
+
+  const date = moment(formData?.PO_DATE).format("MMM Do ");
+
+    const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputChangePhone = (e) =>{
+    setPhone(e.target.value)
+  }
+
+  const handleInputChangeNotes = (e) =>{
+    setNotes(e.target.value)
+
+    dispatch(updatePurchaseNotes(e.target.value))
+  }
   return (
     <div className=' bg-gray-100 rounded-lg'>
 
       <div className='gap-2 flex  p-3 rounded-lg  '>
 
-        <div className='  border bg-white w-[70%] rounded-md   ' >
+        <div className='  border  lg:w-[70%] md:w-[60%] sm:w-[50%] rounded-md   ' >
 
-          {/* <div className='flex w-full justify-between px-2 bg-white py-2 mb-2 rounded-t-md'>
-            <div className='  flex w-[35%] py-2 '>
-              <button className='bg-cyan-700 rounded-md py-1 px-2 text-white'>+ New Purchase</button>
-              <div className='flex ml-4'>
-                <div className='bg-green-400 flex mr-2 p-[2px] h-full'>
 
-                </div>
-                <select className='border-b border-b-gray-300 shadow-sm outline-none' name="whereHouse" id="whereHouse">
-                  <option value="volvo">FD - Fraser Direct</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
-                </select>
-              </div>
+          <PurchaseFormHeader suplier={formData?.SUPPLIER} />
+          <div className='w-full h-[85%]  bg-white overflow-auto  pb-2'>
+            <div className=' bg-white   mt-2 pl-2  '>
+              {/* <GridTable head={head} row={row} setHead={setHead} /> */}
+              <PurchaseGrid />
             </div>
-            <div className=' flex w-[48%]   justify-end '>
-              <div className='flex '>
-                <div className='flex gap-4'>
-                  <div className='flex items-center gap-2'>
-
-                    <IoIosSearch className='text-[18px]' />
-                    Search
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <BsPersonCircle className='text-[18px]' />
-                    Person
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <FiFilter className='text-[18px]' />
-                    Filter
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <BiSortAlt2 className='text-[18px]' />
-                    Sort
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <BiHide className='text-[18px]' />
-                    Hide
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <IoIosMore className='text-[18px]' />
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
-            <div className='flex w-[17%]  justify-end gap-2'>
-              <div className='flex items-center'>
-                <div className='border h-fit flex items-center p-1'>
-
-                  <IoIosArrowDown className='text-[18px]' />
-
-                </div>
-              </div>
-              <div className='flex items-center'>
-                <div className='border flex items-center h-fit p-1'>
-
-                  <IoIosArrowUp className='text-[18px]' />
-
-                </div>
-              </div>
-              <div className='flex items-center p-1'>
-
-                <FiFilter className='text-[18px]' />
-
-              </div>
-              <div className='flex items-center p-1'>
-
-                <IoSettingsOutline className='text-[18px]' />
-
-              </div>
-            </div>
-          </div> */}
-          <PurchaseFormHeader/>
-          <div className='w-full  bg-white overflow-auto  pb-2'>
-          <div className=' bg-white   mt-2 pl-2  '>
-            {/* <GridTable head={head} row={row} setHead={setHead} /> */}
-            <PurchaseGrid/>
-          </div>
           </div>
         </div>
 
-        <div className='px-4 border  bg-white w-[30%] rounded-md shadow-md shadow-gray-200 py-5'  >
+        <div className='px-4 border  bg-white lg:w-[30%] md:w-[40%] sm:w-[50%]  rounded-md shadow-md shadow-gray-200 py-5'  >
           <div className='flex items-center justify-between'>
             <div className='flex gap-2'>
               <Tooltip content='Edit'>
@@ -133,14 +263,18 @@ const PurchaseForm = () => {
             </div>
 
             <div className=''>
-              <p className='H text-gray-800   text-[20px]'>PC0324445</p>
-              <p className='H text-gray-500  text-right '>January 24</p>
+              <p className='H text-gray-800   text-[20px]'>{formData?.PO_NUMBER}</p>
+              <p className='H text-gray-500  text-right '>{date}</p>
 
             </div>
           </div>
           {/* <DropDownInput options={options} /> */}
           {/* <DateTimePicker isDisabled={true} /> */}
-          <div className='flex justify-between w-full'>
+
+          {/*status dropdown*/}
+
+
+          {/* <div className='flex justify-between w-full'>
             <div className='py-4 w-full  '>
               <p className='py-3 text-gray-900 text-[14px]'>Status</p>
               <div className='flex items-center'>
@@ -170,26 +304,48 @@ const PurchaseForm = () => {
                 </select>
               </div>
             </div>
+          </div> */}
+
+
+
+          <div className='w-full mt-4'>
+            <div className='w-full bg-yellow-400 text-white flex justify-center items-center font-semibold py-2 rounded-md'>
+              <TooltipStatus content='Working on it'>
+
+                <p>
+                  Working on it
+
+                </p>
+              </TooltipStatus>
+
+            </div>
+          </div>
+          <div className='w-full mt-2'>
+            <div className='w-full bg-orange-500 text-white flex justify-center items-center font-semibold rounded-md py-2'>
+              <TooltipStatus content='High'>
+
+                <p>
+                  High
+                </p> 
+              </TooltipStatus>
+
+            </div>
           </div>
 
 
 
+          
+          <InputTextEut label="Phone #" placeHolder='Phone #' initialValue={formData?.PHONE_1} value={phone}  onChange={handleInputChangePhone} isDisabled={true} />
+        
+          <InputTextEut label="Ref" placeHolder='Ref' initialValue={formData?.REFERENCE_NUMBER} value={inputValue} onChange={handleInputChange} isDisabled={false} />
+         
+          <InputTextEut label="Email" placeHolder='Email' initialValue={formData?.EMAIL} value={email}  isDisabled={true} />
 
-
-
-
-          <InputTextEut label="PO #" placeHolder='PO #' isDisabled={true} />
-          <InputTextEut label="Phone #" placeHolder='Phone #' isDisabled={true} />
-          <InputTextEut label="Prepared By" placeHolder='Prepared By' isDisabled={true} />
-          <InputTextEut label="PO Date" placeHolder='PO Date' isDisabled={true} />
-          <InputTextEut label="Fax" placeHolder='Fax' isDisabled={true} />
-          <InputTextEut label="Ref" placeHolder='Ref' isDisabled={true} />
-          <InputTextEut label="Supplier" placeHolder='Supplier' isDisabled={true} />
-          <InputTextEut label="Email" placeHolder='Email' isDisabled={true} />
-          <TextArea label="Comments" placeHolder='Comments'/>
+          <TextArea label="Comments" initialValue={formData?.NOTES} onChange={handleInputChangeNotes} value={notes} placeHolder='Comments' />
           {/* <TextInput label="Phone #" isDisabled={true} /> */}
           {/* <TextInput label="Fax" isDisabled={true} />
           <TextInput label="Email" isDisabled={true} /> */}
+
 
           {/* // <TextInput label="Name"/> */}
 

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillUnlock } from "react-icons/ai";
 import { SlArrowDown } from "react-icons/sl";
+import {  useDispatch } from "react-redux";
 
-const CustomModal = ({ isOpen, onClose, tabs, heading }) => {
+
+const CustomModal = ({ isOpen, onClose, tabs, heading, onClickApply, onClickLock }) => {
+  const dispatch = useDispatch()
   const [activeTab, setActiveTab] = useState(0);
 
   if (!isOpen) {
@@ -13,11 +16,13 @@ const CustomModal = ({ isOpen, onClose, tabs, heading }) => {
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
   };
+ 
+  
 
   return (
     //Main div
     <div className="fixed   inset-0 z-50  bg-black bg-opacity-50 flex">
-      <div className="relative p-6 bg-white h-[85vh] overflow-scroll w-[95%] mx-auto  mt-9 rounded-md flex flex-col">
+      <div className="relative p-6 bg-white h-[90vh] w-[95%] mx-auto  mt-9 rounded-md flex flex-col">
         {/* headin and cross icon */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center">
@@ -62,17 +67,11 @@ const CustomModal = ({ isOpen, onClose, tabs, heading }) => {
             ))}
             <div className="ml-auto flex space-x-1 mb-2">
               {/* Add your buttons here */}
-              <button className="bg-gray-300 text-white text-xs px-2  rounded-sm">
+              <button onClick={onClickApply} className="bg-[#6DB4B3] text-white text-xs px-4 py-2  rounded-sm">
                 Apply
               </button>
-              <button className="bg-[#6DB4B3] text-white text-xs px-2  rounded-sm">
+              <button onClick={onClickLock} className="bg-[#6DB4B3] text-white text-xs px-4 py-2  rounded-sm">
                 Lock
-              </button>
-              <button className="bg-[#6DB4B3] text-white text-xs px-2  rounded-sm">
-                Apply
-              </button>
-              <button className="bg-[#6DB4B3] text-white text-xs px-2  rounded-sm">
-                Unlock
               </button>
             </div>
           </div>
@@ -92,15 +91,15 @@ const CustomModal = ({ isOpen, onClose, tabs, heading }) => {
                 <span className="text-red-600">*</span>) are mandatory
               </p>
               <p>
-                You have to lock the product before you can edit it. Click "Lock
-                to lock the product. Click "Apply" to save the details. Click
-                "Reset" to revert the last saved state. Once you have completed
-                the edit, click "Unlock" to release the product lock
+                You have to lock the product before you can edit it. Click &quot;Lock&quot;
+                to lock the product. Click &quot;Apply&quot; to save the details. Click
+                &quot;Reset&quot; to revert the last saved state. Once you have completed
+                the edit, click &quot;Unlock&quot; to release the product lock
               </p>
             </div>
           </div>
           {/* modal body */}
-          <div className="bg-gray-100 h-auto overflow-auto ">
+          <div className="bg-gray-100 h-[60vh] overflow-auto ">
             <div className="rounded-sm p-2 ">{tabs[activeTab].content}</div>
           </div>
         </div>
@@ -133,12 +132,19 @@ export default CustomModal;
 //       content: <div>Content for More</div>,
 //     },
 //   ];
+// const handleApply=()=>{
+
+// }
+// const handleLock=()=>{
+
+// }
 
 // after return()
 
 {
   /* <button onClick={handleOpenModal}>Open Modal</button>
-      <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} tabs={tabs} heading="" /> */
+      <CustomModal isOpen={isModalOpen} onClose={handleCloseModal} tabs={tabs} heading="" onClickApply={handleApply}
+  onClickLock={handleLock} /> */
 }
 
 //***************Modal with tabs********************* */

@@ -45,7 +45,7 @@ function StockInnerGrid() {
   useEffect(() => {
     sendRequest(apiUrl, "POST", payload, getAllTask, accessToken);
   }, []);
-  console.log("data", data);
+  // console.log("data", data);
 
   // const [row, setRow] = useState([
   //   {

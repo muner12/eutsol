@@ -1,14 +1,15 @@
 import React from "react";
+import Image from "next/image";
 
 function LatestProductsCard() {
   return (
-    <div className="flex  flex-col">
+    <div  className="flex  flex-col">
       <div className="flex items-start justify-center my-2  py-2 flex-col">
         {/* header */}
         <div className="flex items-center justify-start w-[93%] py-2 m-auto">
           <div className="flex items-center gap-2">
             <div className="w-[3.2rem] h-[3.2rem] p-2  border rounded-md bg-white border-gray-500">
-              <img src="icons/new-products.png" alt="img" />
+              <Image width='auto' height='auto' src="icons/new-products.png" alt="img" />
             </div>
             <div>
               <h1 className="text-xl font-bold">Latest Products</h1>

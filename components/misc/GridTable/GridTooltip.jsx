@@ -18,9 +18,9 @@ return (
                     
                     <div>
                         {
-                            periority.map((data) => {
+                            periority.map((data , i ) => {
                                 return (
-                                    <div  className={` cursor-pointer ${data == "High" ? "bg-orange-600" : data == "Medium" ? "bg-blue-400" : data == "Low" ? "bg-cyan-400" : data == "Working on it" ? "bg-yellow-400" : data == "Done" ? "bg-green-500" : data == "Stuck" ? "bg-red-600" : data == "initiated" ? "bg-zinc-400" : data == "issued" ? "bg-blue-600" : data == "Ready" ? "bg-indigo-500" : ""}  my-2 p-1 w-full shadow-md text-white text-center`}>
+                                    <div key={i} className={` cursor-pointer ${data == "High" ? "bg-orange-600" : data == "Medium" ? "bg-blue-400" : data == "Low" ? "bg-cyan-400" : data == "Working on it" ? "bg-yellow-400" : data == "Done" ? "bg-green-500" : data == "Stuck" ? "bg-red-600" : data == "initiated" ? "bg-zinc-400" : data == "issued" ? "bg-blue-600" : data == "Ready" ? "bg-indigo-500" : ""}  my-2 p-1 w-full shadow-md text-white text-center`}>
                                         <p>{data}</p>
                                     </div>
                                 )
@@ -35,9 +35,9 @@ return (
                     content == "Working on it" || content == "Done" || content == "Stuck" || content == "initiated" || content == "issued" ||content == "Ready" ?
                     <div>
                     {
-                            statusArray.map((data) => {
+                            statusArray.map((data , i) => {
                                 return (
-                                    <div  className={` cursor-pointer ${data == "High" ? "bg-orange-600" : data == "Medium" ? "bg-blue-400" : data == "Low" ? "bg-cyan-400" : data == "Working on it" ? "bg-yellow-400" : data == "Done" ? "bg-green-500" : data == "Stuck" ? "bg-red-600" : data == "initiated" ? "bg-zinc-400" : data == "issued" ? "bg-blue-600" : data == "Ready" ? "bg-indigo-500" : ""}  my-2 p-1 w-full shadow-md text-white text-center`}>
+                                    <div key={i} className={` cursor-pointer ${data == "High" ? "bg-orange-600" : data == "Medium" ? "bg-blue-400" : data == "Low" ? "bg-cyan-400" : data == "Working on it" ? "bg-yellow-400" : data == "Done" ? "bg-green-500" : data == "Stuck" ? "bg-red-600" : data == "initiated" ? "bg-zinc-400" : data == "issued" ? "bg-blue-600" : data == "Ready" ? "bg-indigo-500" : ""}  my-2 p-1 w-full shadow-md text-white text-center`}>
                                         <p>{data}</p>
                                     </div>
                                 )

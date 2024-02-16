@@ -6,6 +6,7 @@ import useApiFetch from "../../../../customHook/CustomHook";
 import { useSelector, useDispatch } from "react-redux";
 import { redirect } from "next/navigation";
 import { setUser } from "../../../../redux/user/userSlice";
+
 // import { setSharedVariable } from "../../../session";
 //import {cookies} from 'next/headers'
 // import { useRouter } from "next/navigation";
@@ -15,7 +16,7 @@ import { setUser } from "../../../../redux/user/userSlice";
 // const showHeader = rout === '/login'? false : true;
 // console.log(showHeader);
 const LoginForm = () => {
-    // cookies().set('login',false);
+  // cookies().set('login',false);
   const dispatch = useDispatch();
 
   const [check, setCheck] = useState(false);
@@ -34,20 +35,14 @@ const LoginForm = () => {
     localStorage.setItem("tokenSession", data.access_token);
     //to check if user is log in
     let mCheck = data ? true : false;
-    // if(mCheck){
-    //     cookies().set('login',true);
-    // }
-   
+  
     dispatch(setUser(mCheck));
     setCheck(mCheck);
-    setSharedVariable(mCheck);
-    // console.log('cookies' ,cookies().get('login'));
+   
     setErrorMessage(error);
   }
 
-  // useEffect(()=>{
-  //     sendRequest()
-  // },[])
+
 
   const handleLogin = () => {
     payload.username = username;
@@ -55,25 +50,24 @@ const LoginForm = () => {
 
     sendRequest(apiUrl, "POST", payload, getAllTask);
   };
-  // const lt =  localStorage.getItem('tokenSession');
-  // console.log('token',lt)
+ 
 
-  // console.log('check in login' , check);
+ 
   let bool = useSelector((state) => state.user.user);
-  // console.log('check in login user' , bool);
+ 
   if (check) {
-    bool = check;
+   
     redirect("/dashbord");
   }
-//   console.log('cookies' ,cookies().get('login'));
+  
   return (
     <>
-      <div className="h-full  bg-gray-200 dark:bg-gray-900">
+      <div className="  bg-[#e1eff2] dark:bg-gray-900 ">
         <div className="mx-auto">
-          <div className="flex justify-center px-6 py-12">
-            <div className="w-full  xl:w-3/4 lg:w-11/12 flex shadoe shadow-md shadow-gray-600">
-              <div className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover ">
-                <img src="/login/bg-12.png" className="" />
+          <div className="flex justify-center rounded-xl">
+            <div className="w-full  xl:w-3/4 lg:w-11/12 flex  rounded-2xl shadow-md shadow-gray-600">
+              <div className="w-full  bg-gray-400 hidden lg:block lg:w-5/12 bg-cover ">
+                <Image src="/login/bg-12.png" width={100} height={100} className="" />
               </div>
               <div className="w-full lg:w-7/12 bg-white p-10 ">
                 <form className="flex-col text-center mx-auto  ">
@@ -139,7 +133,7 @@ const LoginForm = () => {
                     className="text-white bg-gradient-to-br from-[#0377bd] to-[#035e93] hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-100 dark:focus:ring-blue-100 font-medium rounded-lg text-md h-10 w-80 px-5 py-2.5 mb-3 md:mb-5  shadow-md shadow-blue-500"
                     onClick={handleLogin}
                   >
-                    Let's Start
+                    Let&apos;s Start
                   </button>
 
                   <div className="text-center mt-5 text-[#222222] font-light text-xs px-20">

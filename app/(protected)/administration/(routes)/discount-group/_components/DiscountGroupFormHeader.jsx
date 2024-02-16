@@ -5,11 +5,11 @@ import { FiFilter } from 'react-icons/fi'
 import { IoIosArrowDown, IoIosArrowUp, IoIosMore, IoIosSearch } from 'react-icons/io'
 import { IoSettingsOutline } from 'react-icons/io5'
 
-const DiscountGroupFormHeader = () => {
+const DiscountGroupFormHeader = ({...rest}) => {
   return (
     <div className='flex w-full justify-between px-2 bg-white py-2 mb-2 rounded-t-md'>
     <div className='  flex w-[35%] py-2 '>
-      <button className='bg-cyan-700 rounded-md py-1 px-2 text-white'>+ New Discount</button>
+      <button {...rest} className='bg-cyan-700 rounded-md py-1 px-2 text-white'>+ New Discount</button>
       {/* <div className='flex ml-4'>
         <div className='bg-green-400 flex mr-2 p-[2px] h-full'>
 

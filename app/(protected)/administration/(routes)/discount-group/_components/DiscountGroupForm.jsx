@@ -1,8 +1,8 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
-
+import moment from 'moment'
 
 
 import { IoIosArrowDown, IoIosArrowUp, IoIosMore, IoIosSearch } from 'react-icons/io'
@@ -28,7 +28,32 @@ const DiscountGroupForm = (prop) => {
   
   
 let data=prop.data
-  const [enabled, setEnabled] = useState(prop.data.ACTIVE_FLAG)
+console.log(data)
+  const [enabled, setEnabled] = useState(true);
+  const [edit,setEdit]=useState({});
+  const [formData,setFormData] = useState({
+    code:data.CODE,
+    name:data.NAME,
+    descountPercent:data.DISCOUNT_PERCENTAGE,
+    desc:data.DESCRIPTION,
+    status:data.ACTIVE_FLAG,
+
+  });
+  console.log(formData);
+  const [newDiscount,setNewDiscount] = useState();
+
+  const newDiscountHandler = (e) => {
+    setEnabled(false);
+    setFormData({
+      code:"",
+      name:"",
+      descountPercent:"",
+      desc:"",
+      status:"",
+    })
+
+  }
+
   const [head, setHead] = useState([{ title: 'SubItem', slector: 'SubItem', Wid: 250, customComp: ModalOpen }, { title: 'Part', slector: 'Part', Wid: 120 }, { title: 'Cost', slector: 'Cost', Wid: 100 }, { title: 'LastCost', slector: 'LastCost', Wid: 120 }, { title: 'OhQty', slector: 'OhQty', Wid: 120 }, { title: 'OrderQty', slector: 'OrderQty', Wid: 120 }, { title: 'UOM', slector: 'UOM', Wid: 120 }, { title: 'Conv', slector: 'Conv', Wid: 120 }, { title: 'CaseQty', slector: 'CaseQty', Wid: 120 }, { title: 'Split', slector: 'Split', Wid: 120 }, { title: 'Batch', slector: 'Batch', Wid: 120 }, { title: 'Expiry', slector: 'Expiry', Wid: 120 }])
   const [row, setRow] = useState([{ SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" }, { SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" },])
      
@@ -41,6 +66,14 @@ let data=prop.data
       const getSlect = (e) => {
         setItem(e.target.value)
       }
+
+      const changeHandler=(e) => {
+        setFormData((prevFormData)=>({...prevFormData, [e.target.name]:e.target.value}));
+        // setEdit({...edit, [e.target.name]:e.target.value});
+        // console.log(edit);
+        console.log(formData);
+      }
+      useEffect(() => {console.log(formData)},[formData]);
   return (
     <div className=' bg-gray-100 rounded-lg'>
 
@@ -48,7 +81,7 @@ let data=prop.data
 
       <div className='  border bg-white w-[60%] rounded-md   ' >
 
-        <DiscountGroupFormHeader/>
+        <DiscountGroupFormHeader onClick={newDiscountHandler}/>
         <div className='w-full  bg-white overflow-auto  pb-2'>
         <div className=' bg-white   mt-2 pl-2  '>
           {/* <GridTable head={head} row={row} setHead={setHead} /> */}
@@ -61,7 +94,7 @@ let data=prop.data
         <div className='flex items-center justify-between'>
           <div className='flex gap-2'>
             <Tooltip content='Edit'>
-              <MdEdit className='text-[30px] border  bg-purple-200 rounded-lg cursor-pointer p-1 text-purple-500 hover:text-white hover:bg-purple-500' />
+              <MdEdit   onClick={()=>setEnabled(!enabled)}  className='text-[30px] border  bg-purple-200 rounded-lg cursor-pointer p-1 text-purple-500 hover:text-white hover:bg-purple-500' />
             </Tooltip>
             <Tooltip content='Perview'>
               <FaRegEye className='text-[30px] rounded-lg border cursor-pointer p-1 bg-sky-100 text-sky-500 hover:text-white hover:bg-sky-400' />
@@ -73,7 +106,7 @@ let data=prop.data
 
           <div className=''>
             <p className='H text-gray-800   text-[20px]'>{prop.data.DISGRP_ID}</p>
-            <p className='H text-gray-500  text-right '> March 24</p>
+            <p className='H text-gray-500  text-right '> {moment(data.DISCOUNT_GROUP_DATE).format("MMMM D, YYYY, h:mm:ss A")}</p>
 
           </div>
         </div>
@@ -84,10 +117,10 @@ let data=prop.data
             <p className='py-3 text-gray-900 text-[14px]'>Status</p>
             <div className='flex items-center'>
 
-              <div className={`p-1 h-[30px] mr-2 rounded-full ${item == "High" ? "bg-orange-600" : item == "Medium" ? "bg-blue-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
+              <div className={`p-1 h-[30px] mr-2 rounded-full ${formData.status == "Y" ? "bg-green-600" : formData.status == "N" ? "bg-red-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
               <select className='outline-none text-[16px]' onChange={getSlect}>
-                <option value="Working on it">Working on it</option>
-                <option value="Done">Done</option>
+                <option value="Y" selected={formData.status=="Y"?true:false}>Active</option>
+                <option value="N" selected={formData.status=="N"?true:false}>Deactive</option>
                 <option value="Stuck">Stuck</option>
                 <option value="intiated">intiated</option>
                 <option value="issued">issued</option>
@@ -117,15 +150,14 @@ let data=prop.data
 
 
 
-         <InputTextEut label="CODE" placeHolder='CODE' isDisabled={false} initialValue={data.CODE}/>
+         <InputTextEut onChange={changeHandler} name={"CODE"} label="CODE" placeHolder='CODE' isDisabled={enabled} value={formData.code}/>
         
         
-          <InputTextEut label="Name" placeHolder='Name' isDisabled={true}  initialValue={data.NAME}/>
-          <InputTextEut label="Discription" placeHolder='Discription' isDisabled={true}  initialValue={data.DESCRIPTION}/>
-          <InputTextEut label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={true} initialValue={data.DISCOUNT_PERCENTAGE}/>
+          <InputTextEut onChange={changeHandler} name={"NAME"} label="Name" placeHolder='Name' isDisabled={enabled}  value={formData.name}/>
+          <InputTextEut onChange={changeHandler} name={"DISCOUNT_PERCENTAGE"} label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={enabled} value={formData.descountPercent}/>
           
     
-        <TextArea label="Descripiton" placeHolder='Descripiton' initialValue={data.DESCRIPTION}/>
+        <TextArea onChange={changeHandler} name={"DESCRIPTION"} label="Descripiton" placeHolder='Descripiton' value={formData.desc}/>
         {/* <TextInput label="Phone #" isDisabled={true} /> */}
         {/* <TextInput label="Fax" isDisabled={true} />
         <TextInput label="Email" isDisabled={true} /> */}

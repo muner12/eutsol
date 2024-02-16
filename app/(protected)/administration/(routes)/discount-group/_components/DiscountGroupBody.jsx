@@ -10,7 +10,7 @@ import StatusCell from '../../../../../../components/misc/GridTable/StatusCell'
 
 import DiscountGroupStatus from "./DiscountGroupStatus";
 
-const PurchaseBody = () => {
+const DiscountGroupBody = () => {
 
   let [error, sendRequest] = useApiFetch()
   const [data, setData] = useState()
@@ -20,12 +20,17 @@ const PurchaseBody = () => {
      const [head, setHead] = useState([
         { title: 'CODE', slector: 'CODE', Wid: 280, filter: "textFilter",Modal:DiscountGroupModal}, 
         { title: 'Name', Wid: 250, slector: 'NAME' },
+      
          { title: 'Description', Wid: 180, slector: 'DESCRIPTION'},
           { title: 'Discount Percentage', slector: 'DISCOUNT_PERCENTAGE', filter: "checkFilter" , Wid: 250 }
           , { title: 'Status', slector: 'ACTIVE_FLAG', Wid: 200   ,Status:DiscountGroupStatus  }, ])
 
     
-const [subHead, setSubHead] = useState([{ title: 'SubItem', slector:'SubItem' ,Wid: 250 ,  }, { title: 'Part', slector:'Part' , Wid: 120 }, { title: 'Cost', slector:'Cost' , Wid: 100 }, { title: 'LastCost', slector:'LastCost' , Wid: 120 }, { title: 'OhQty', slector:'OhQty' , Wid: 120 }, { title: 'OrderQty', slector:'OrderQty' , Wid: 120 }, { title: 'UOM', slector:'UOM' , Wid: 120 }, { title: 'Conv', slector:'Conv' , Wid: 120 }, { title: 'CaseQty', slector:'CaseQty' , Wid: 120 }, { title: 'Split', slector:'Split' , Wid: 120 }, { title: 'Batch', slector:'Batch' , Wid: 120 }, { title: 'Expiry', slector:'Expiry' , Wid: 120 }])
+const [subHead, setSubHead] = useState([
+  { title: 'SubItem', slector:'SubItem' ,Wid: 250 ,  },
+   { title: 'Part', slector:'Part' , Wid: 120 }, 
+   { title: 'Cost', slector:'Cost' , Wid: 100 }, 
+   { title: 'LastCost', slector:'LastCost' , Wid: 120 }, { title: 'OhQty', slector:'OhQty' , Wid: 120 }, { title: 'OrderQty', slector:'OrderQty' , Wid: 120 }, { title: 'UOM', slector:'UOM' , Wid: 120 }, { title: 'Conv', slector:'Conv' , Wid: 120 }, { title: 'CaseQty', slector:'CaseQty' , Wid: 120 }, { title: 'Split', slector:'Split' , Wid: 120 }, { title: 'Batch', slector:'Batch' , Wid: 120 }, { title: 'Expiry', slector:'Expiry' , Wid: 120 }])
 
 const apiUrl = `${process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL}Administration/GetDiscountGroupList`
 //const apiUrl=`http://localhost:8080/Result`
@@ -79,12 +84,12 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className=''>
+    <div className='ml-10'>
         
           <div className=''>
         <GridTable head={head} row={data?.Result} setHead={setHead}    GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
         </div>
-        <div className='my-5'>
+        <div className='my-5 '>
         <GridTable head={head} row={compRow} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Deactive' GridColor="green-400" GridColaps={true} />
       
         </div>
@@ -92,4 +97,4 @@ useEffect(() => {
   )
 }
 
-export default PurchaseBody
+export default DiscountGroupBody

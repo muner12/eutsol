@@ -1,5 +1,5 @@
 "use client";
-
+import StockPriority from './StockPriority'
 import GridTable from "../../../../../../components/misc/GridTable/GridTable";
 import ModalOpen from "../../../../../../components/misc/GridTable/ModalOpen";
 //import PhoneNumber from '../../../../../../components/misc/GridTable/PhoneNumber'
@@ -21,6 +21,7 @@ function StockGridView() {
     { title: "Stock Date", slector: "STOORD_DATE", Wid: 220, date: true },
     { title: "Receiving", slector: "RECEIVING_NUMBER", Wid: 220 },
     { title: "ReceivingDate", slector:'RECEIVING_DATE', Wid: 220, date: true },
+    { title: 'Priority',slector:'Priority', Wid: 200,customComp: StockPriority },
     { title: "Warehouse", slector: "INVENTORY", Wid: 220 },
     { title: "Status", slector: "STOCK_ORD_STATUS",  Wid: 250, Status:StockStatus , filter: "checkFilter" , checkFilterOptions:["Full Transferred |Full Assigned",
     "Initiated",
