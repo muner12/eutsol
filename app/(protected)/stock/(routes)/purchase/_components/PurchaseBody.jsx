@@ -17,20 +17,26 @@ import StatusCell from "../../../../../../components/misc/GridTable/StatusCell";
 const PurchaseBody = () => {
   let [error, sendRequest] = useApiFetch();
   const [data, setData] = useState();
-  const [colaps , setColaps] = useState(false)
-  const [colapsComp , setColapsComp] = useState(false)
+  const [colaps, setColaps] = useState(false);
+  const [colapsComp, setColapsComp] = useState(false);
   // const [head, setHead] = useState([{ title: 'Contact', slector:'Contact' ,  Wid: 250, filter: "textFilter" , customComp: ModalOpen }, { title: 'Priority', Wid: 100, status: "priority", slector:'Priority' ,  }, { title: 'order Date', Wid: 100 , slector:'orderDate'  ,  date:true }, { title: 'comp Date', Wid: 100 , slector:'compDate'  , date:true }, { title: 'Vander', slector:'Vander' ,  Wid: 100 }, { title: 'phone', slector:'phone' , Wid: 200 , customComp:PhoneNumber }, { title: 'email', slector:'email' , Wid: 200 }, { title: 'cost', slector:'cost' , Wid: 200 }, { title: 'status',slector:'status' , Wid: 150 , status: "status" ,}, { title: 'comments', slector:'comments' , Wid: 200 },])
   const [head, setHead] = useState([
     {
       title: "Order number",
       slector: "PO_NUMBER",
-      Wid: 270,
+      Wid: 250,
       filter: "textFilter",
       Modal: PurchaseFormModall,
     },
-    { title: "Order Date", Wid: 250, slector: "PPROVED_DATE", date: true },
-    
-    { title: "Comp Date", Wid: 250, slector: "COMPLETED_DATE", date: true },
+    { title: "Order Date", Wid: 150, slector: "PPROVED_DATE", date: true },
+    {
+      title: "Priority",
+      Wid: 120,
+      slector: "",
+      Status: PurchasePiriority,
+      mWid: 150,
+    },
+    { title: "Comp Date", Wid: 150, slector: "COMPLETED_DATE", date: true },
     {
       title: "Vendor",
       slector: "SUPPLIER",
@@ -41,13 +47,13 @@ const PurchaseBody = () => {
         "Maria Supplier",
         "PAKISTANI SUPPLIERS",
       ],
-      Wid: 250,
+      Wid: 150,
     },
-    { title: "Cost", slector: "TOTAL_COST", Wid: 200, filter: "NumberFilter" },
+    { title: "Cost", slector: "TOTAL_COST", Wid: 100, filter: "NumberFilter" , tottal:'Cost' },
     {
       title: "Status",
       slector: "PO_CURRENT_STATUS",
-      Wid: 200,
+      Wid: 150,
       Status: PurchaseStatus,
       filter: "checkFilter",
       checkFilterOptions: [
@@ -159,31 +165,27 @@ const PurchaseBody = () => {
     sendRequest(apiUrlSku, "POST", payloadSku, getAllTaskSku, accessToken);
   }, []);
 
- 
-
-  const colapsfunc =()=>{
-    if(colaps && !colapsComp){
-      setColaps(false)
-      setColapsComp(true)
-    }else{
-      setColaps(!colaps)
+  const colapsfunc = () => {
+    if (colaps && !colapsComp) {
+      setColaps(false);
+      setColapsComp(true);
+    } else {
+      setColaps(!colaps);
     }
+  };
 
-  }
-
-  const colapsfuncComp =()=>{
-    if(!colaps && colapsComp){
-      setColaps(true)
-      setColapsComp(false)
-    }else{
-      setColapsComp(!colapsComp)
+  const colapsfuncComp = () => {
+    if (!colaps && colapsComp) {
+      setColaps(true);
+      setColapsComp(false);
+    } else {
+      setColapsComp(!colapsComp);
     }
-
-  }
+  };
   return (
     <div className=" w-full    ">
       <div className=" h-full w-full  ">
-        <div className=" overflow-auto h-fit xl:max-h-[60vh] lg:max-h-[50vh] md:max-h-[50vh] sm:max-h-[50vh] max-h-[50vh]">
+        <div className=" overflow-auto h-fit lgdesktop:max-h-[57vh] desktop:max-h-[43vh] laptop:max-h-[43vh] tablet:max-h-[50vh] max-h-[50vh]">
           <GridTable
             head={head}
             row={data?.Result}
@@ -198,7 +200,7 @@ const PurchaseBody = () => {
             colapsfunc={colapsfunc}
           />
         </div>
-        <div className="my-5  overflow-auto h-fit xl:max-h-[60vh] lg:max-h-[50vh] md:max-h-[50vh] sm:max-h-[50vh] max-h-[50vh]">
+        <div className="my-3  overflow-auto h-fit lgdesktop:max-h-[57vh] desktop:max-h-[43vh] laptop:max-h-[43vh] tablet:max-h-[50vh] max-h-[50vh]">
           <GridTable
             head={head}
             row={compRow}

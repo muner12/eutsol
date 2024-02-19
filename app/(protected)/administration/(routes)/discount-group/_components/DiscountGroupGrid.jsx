@@ -46,10 +46,33 @@ const DiscountGroupGrid = () => {
 
 
     }, []);
-
+    const [colaps , setColaps] = useState(false)
+    const [colapsComp , setColapsComp] = useState(false)
+    const colapsfunc =()=>{
+        if(colaps && !colapsComp){
+          setColaps(false)
+          setColapsComp(true)
+        }else{
+          setColaps(!colaps)
+        }}
+      
+      const colapsfuncComp =()=>{
+        if(!colaps && colapsComp){
+          setColaps(true)
+          setColapsComp(false)
+        }else{
+          setColapsComp(!colapsComp)
+        }}
     return (
         <div>
-            <GridTable head={head} row={row} setHead={setHead} />
+            <GridTable 
+            head={head} 
+            row={row} 
+            setHead={setHead} 
+            colaps={colaps}
+            setColaps={setColaps}
+            colapsfunc={colapsfunc}
+            />
         </div>
     )
 }

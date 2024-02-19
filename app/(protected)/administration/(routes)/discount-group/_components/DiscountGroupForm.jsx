@@ -21,6 +21,8 @@ import DiscountGroupFormHeader from './DiscountGroupFormHeader'
 import DiscountGroupGrid from './DiscountGroupGrid'
 import TextArea from '../../../../../../components/misc/textinput/TextArea'
 import { Switch } from '@headlessui/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFormData } from '../_redux/DiscountGroupSlice'
 // import PhoneNumber from './GridTable/PhoneNumber'
 
 const DiscountGroupForm = (prop) => {
@@ -28,31 +30,24 @@ const DiscountGroupForm = (prop) => {
   
   
 let data=prop.data
-console.log(data)
-  const [enabled, setEnabled] = useState(true);
+
+let dispatch=useDispatch();
+  const [enabled, setEnabled] = useState(false);
   const [edit,setEdit]=useState({});
-  const [formData,setFormData] = useState({
-    code:data.CODE,
-    name:data.NAME,
-    descountPercent:data.DISCOUNT_PERCENTAGE,
-    desc:data.DESCRIPTION,
-    status:data.ACTIVE_FLAG,
+  
+const [code,setCode]=useState(data.CODE);
 
-  });
-  console.log(formData);
-  const [newDiscount,setNewDiscount] = useState();
+const [name,setName]=useState(data.NAME);
+const [descountPercent,setDescountPercent]=useState(data.DISCOUNT_PERCENTAGE);
 
-  const newDiscountHandler = (e) => {
-    setEnabled(false);
-    setFormData({
-      code:"",
-      name:"",
-      descountPercent:"",
-      desc:"",
-      status:"",
-    })
+const [desc,setDesc]=useState(data.DESCRIPTION);
 
-  }
+const [status,setStatus]=useState(data.ACTIVE_FLAG);
+
+
+
+
+  
 
   const [head, setHead] = useState([{ title: 'SubItem', slector: 'SubItem', Wid: 250, customComp: ModalOpen }, { title: 'Part', slector: 'Part', Wid: 120 }, { title: 'Cost', slector: 'Cost', Wid: 100 }, { title: 'LastCost', slector: 'LastCost', Wid: 120 }, { title: 'OhQty', slector: 'OhQty', Wid: 120 }, { title: 'OrderQty', slector: 'OrderQty', Wid: 120 }, { title: 'UOM', slector: 'UOM', Wid: 120 }, { title: 'Conv', slector: 'Conv', Wid: 120 }, { title: 'CaseQty', slector: 'CaseQty', Wid: 120 }, { title: 'Split', slector: 'Split', Wid: 120 }, { title: 'Batch', slector: 'Batch', Wid: 120 }, { title: 'Expiry', slector: 'Expiry', Wid: 120 }])
   const [row, setRow] = useState([{ SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" }, { SubItem: "item 1", Part: "NV325423", Cost: "$34.32", LastCost: '$25.34', OhQty: "500", OrderQty: "200", UOM: "EA", Conv: "12", CaseQty: "16.66", Split: "", Batch: "98569323", Expiry: "Jan 24 , 2026" },])
@@ -64,16 +59,47 @@ console.log(data)
       // 
     
       const getSlect = (e) => {
+
+
         setItem(e.target.value)
       }
 
-      const changeHandler=(e) => {
-        setFormData((prevFormData)=>({...prevFormData, [e.target.name]:e.target.value}));
-        // setEdit({...edit, [e.target.name]:e.target.value});
-        // console.log(edit);
-        console.log(formData);
-      }
-      useEffect(() => {console.log(formData)},[formData]);
+     
+
+
+      //changehandlers
+      const handleCodeChange = (e) => {
+        setCode(e.target.value);
+      };
+    
+      const handleNameChange = (e) => {
+        setName(e.target.value);
+      };
+    
+      const handleDiscountPercentChange = (e) => {
+        setDescountPercent(e.target.value);
+      };
+    
+      const handleDescChange = (e) => {
+        setDesc(e.target.value);
+      };
+      const handleStatusChange = (e) => {
+        setStatus(e.target.value);
+      };
+    
+     
+      const formData = {
+        CODE: code,
+        NAME: name,
+        DISCOUNT_PERCENTAGE: descountPercent,
+        DESCRIPTION: desc,
+        ACTIVE_FLAG: status
+      };
+      dispatch(setFormData(formData));
+  
+      // Submit formData to your API
+      console.log('Submitted data:', formData);
+   
   return (
     <div className=' bg-gray-100 rounded-lg'>
 
@@ -81,7 +107,7 @@ console.log(data)
 
       <div className='  border bg-white w-[60%] rounded-md   ' >
 
-        <DiscountGroupFormHeader onClick={newDiscountHandler}/>
+        <DiscountGroupFormHeader onClick={()=>{}}/>
         <div className='w-full  bg-white overflow-auto  pb-2'>
         <div className=' bg-white   mt-2 pl-2  '>
           {/* <GridTable head={head} row={row} setHead={setHead} /> */}
@@ -117,14 +143,11 @@ console.log(data)
             <p className='py-3 text-gray-900 text-[14px]'>Status</p>
             <div className='flex items-center'>
 
-              <div className={`p-1 h-[30px] mr-2 rounded-full ${formData.status == "Y" ? "bg-green-600" : formData.status == "N" ? "bg-red-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
-              <select className='outline-none text-[16px]' onChange={getSlect}>
-                <option value="Y" selected={formData.status=="Y"?true:false}>Active</option>
-                <option value="N" selected={formData.status=="N"?true:false}>Deactive</option>
-                <option value="Stuck">Stuck</option>
-                <option value="intiated">intiated</option>
-                <option value="issued">issued</option>
-                <option value="Ready">Ready</option>
+              <div className={`p-1 h-[30px] mr-2 rounded-full ${status == "Y" ? "bg-green-600" : status == "N" ? "bg-red-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
+              <select className='outline-none text-[16px]' onChange={handleStatusChange}>
+                <option value="Y" selected={status=="Y"?true:false}>Active</option>
+                <option value="N" selected={status=="N"?true:false}>Deactive</option>
+               
               </select>
             </div>
           </div>
@@ -150,14 +173,14 @@ console.log(data)
 
 
 
-         <InputTextEut onChange={changeHandler} name={"CODE"} label="CODE" placeHolder='CODE' isDisabled={enabled} value={formData.code}/>
+         <InputTextEut onChange={handleCodeChange} name={"CODE"} label="CODE" placeHolder='CODE' isDisabled={enabled} value={code}/>
         
         
-          <InputTextEut onChange={changeHandler} name={"NAME"} label="Name" placeHolder='Name' isDisabled={enabled}  value={formData.name}/>
-          <InputTextEut onChange={changeHandler} name={"DISCOUNT_PERCENTAGE"} label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={enabled} value={formData.descountPercent}/>
+          <InputTextEut onChange={handleNameChange} name={"NAME"} label="Name" placeHolder='Name' isDisabled={enabled}  value={name}/>
+          <InputTextEut onChange={handleDiscountPercentChange} name={"DISCOUNT_PERCENTAGE"} label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={enabled} value={descountPercent}/>
           
     
-        <TextArea onChange={changeHandler} name={"DESCRIPTION"} label="Descripiton" placeHolder='Descripiton' value={formData.desc}/>
+        <TextArea onChange={handleDescChange} name={"DESCRIPTION"} label="Descripiton" placeHolder='Descripiton' value={desc}/>
         {/* <TextInput label="Phone #" isDisabled={true} /> */}
         {/* <TextInput label="Fax" isDisabled={true} />
         <TextInput label="Email" isDisabled={true} /> */}

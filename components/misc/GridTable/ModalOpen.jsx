@@ -10,6 +10,7 @@ import { GoHome } from "react-icons/go";
 
 
 import React, { useState , useEffect } from 'react'
+import { GrExpand } from "react-icons/gr";
 
 
 
@@ -24,12 +25,14 @@ const Tooltip = ({ content, children }) => {
         {isTooltipVisible && (
           <div className="absolute z-10 bg-gray-600 text-white w-[170px] p-4 rounded-md text-sm shadow-lg mt-8">
             <div>{content}</div>
+            
           </div>
         )}
         <div
-          className="inline-block cursor-pointer"
+          className="inline-block cursor-pointer "
           onMouseEnter={() => setTooltipVisible(true)}
           onMouseLeave={() => setTooltipVisible(false)}
+          onClick={() => setTooltipVisible(false)}
         >
           {children}
         </div>
@@ -56,14 +59,19 @@ const Tooltip = ({ content, children }) => {
    } , [data])
 
     return (
-      <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
-    <div className="flex">  {data} <span className={`ml-2 ${length == 0 && 'hidden'} bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
-        <Tooltip content="Open purchase Order Form">
+      <div className=' group flex justify-between w-full text-[14px] pl-2 items-center'>
+    <div className="flex">  {data} <span className={`ml-2 ${length == 0 && 'hidden'} bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>   </div> 
+       <div className="flex">
+
+        <div className=" hidden items-center mr-2  group-hover:flex"><GrExpand className="mr-2" />Open</div>
+        <Tooltip content="Open  Form">
           <div className=' flex items-center px-3 border-l'>
+            
             {/* <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' /> */}
           { Comp &&   <Comp index={index}/>}
           </div>
         </Tooltip>
+        </div>
         {/* <CustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Purchase Order"/> */}
         
       </div>

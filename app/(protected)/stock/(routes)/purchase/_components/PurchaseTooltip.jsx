@@ -9,7 +9,7 @@ const TooltipStatus = ({ content, children }) => {
 const [statusArray , setStatusArray] = useState(["Working on it", "Done", "Stuck", "initiated", "issued", "Ready"])
 //   console.log("this is log" , content);
 return (
-        <div className="group relative  ">
+        <div className="group relative w-full ">
             {isTooltipVisible && (
                 <div className="absolute z-10  bg-white text-black w-[170px] p-4 rounded-md text-sm shadow-lg mt-8">
                  <div>

@@ -12,8 +12,8 @@ body{
 
 
 ::-webkit-scrollbar {
-    width: 8px; /* Width of vertical scrollbar */
-    height: 8px; /* Height of horizontal scrollbar */
+    width: 6px; /* Width of vertical scrollbar */
+    height: 6px; /* Height of horizontal scrollbar */
 }
 
 /* For the track (the area on which the thumb moves) */
@@ -23,7 +23,7 @@ body{
 
 /* For the thumb (the draggable bar) */
 ::-webkit-scrollbar-thumb {
-    background-color: #9ca3af; /* Color of the thumb */
+    background-color: gainsboro; /* Color of the thumb */
     border-radius: 4px; /* Radius of the thumb corners */
 }
 

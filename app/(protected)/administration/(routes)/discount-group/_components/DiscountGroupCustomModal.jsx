@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillUnlock } from "react-icons/ai";
 import { SlArrowDown } from "react-icons/sl";
-import {  useDispatch } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import CustomModalButton from "./CustomModalButton";
 
 const DiscountGroupCustomModal = ({ isOpen, onClose, tabs, heading }) => {
   const dispatch = useDispatch()
+  const data=useSelector((state)=>state.discountGroup.formData);
+  console.log(data);
   const [activeTab, setActiveTab] = useState(0);
 
   if (!isOpen) {

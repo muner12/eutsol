@@ -5,14 +5,17 @@ const DiscountGroupSlice = createSlice({
   name: 'data',
   initialState: {
     // Define your initial state
-    formData: null,
+    data:[],
+    formData: [],
   },
   reducers: {
     setFormData(state, action) {
-      state.formData = action.payload;
+        console.log(action.payload);
+      state.formData=action.payload;
     },
   },
+
 });
 
 export const { setFormData } = DiscountGroupSlice.actions;
-export default dataSlice.reducer;
+export default DiscountGroupSlice

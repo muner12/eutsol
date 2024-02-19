@@ -10,6 +10,8 @@ import DiscountGroupCustomModal from "./DiscountGroupCustomModal";
 import React, { useState } from 'react'
 import PurchaseForm from "../../../../../../components/misc/PurchaseForm";
 import DiscountGroupForm from "./DiscountGroupForm";
+import { useDispatch } from "react-redux";
+import { setFormData } from "../_redux/DiscountGroupSlice";
 
 
 const Tooltip = ({ content, children }) => {
@@ -41,6 +43,7 @@ const Tooltip = ({ content, children }) => {
 
   function DiscountGroupModal({ data , length , child ,index }) {
     
+    
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleOpenModal = () => {
@@ -50,6 +53,7 @@ const Tooltip = ({ content, children }) => {
       setIsModalOpen(false);
     };
   const tabs = [
+    
     { 
       icon: <GoHome/>,
       label: 'Details', content: <div><DiscountGroupForm data={index}/></div> },

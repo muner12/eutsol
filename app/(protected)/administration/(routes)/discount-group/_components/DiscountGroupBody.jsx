@@ -11,7 +11,7 @@ import StatusCell from '../../../../../../components/misc/GridTable/StatusCell'
 import DiscountGroupStatus from "./DiscountGroupStatus";
 
 const DiscountGroupBody = () => {
-
+  
   let [error, sendRequest] = useApiFetch()
   const [data, setData] = useState()
   //const [row, setRow] =useState([{CODE:"13",NAME:"JOHN",DESCRIPTION:"DESCRIPTION",DISCOUNT_PERCENTAGE:"Y"}]);
@@ -36,7 +36,7 @@ const apiUrl = `${process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL}Administration/
 //const apiUrl=`http://localhost:8080/Result`
 
 const [compRow , setCompRow] = useState([])
-console.log('comp Row' , compRow);
+//console.log('comp Row' , compRow);
 const payload = {
     data: {
               ACTIVE_FLAG: "N",
@@ -67,10 +67,10 @@ function getAllTask(data) {
 
 useEffect(()=>{
   data?.Result?.forEach((comp)=>{
-    console.log('check========', comp.ACTIVE_FLAG );
+    //console.log('check========', comp.ACTIVE_FLAG );
   if(comp?.ACTIVE_FLAG == "N" ){
     setCompRow((prev) => [...prev, comp]);
-    console.log('comp Row', compRow);
+    //console.log('comp Row', compRow);
   }
   }
   )
@@ -83,14 +83,59 @@ useEffect(() => {
 
 }, []);
 
+const [colaps , setColaps] = useState(false)
+const [colapsComp , setColapsComp] = useState(false)
+
+const colapsfunc =()=>{
+  if(colaps && !colapsComp){
+    setColaps(false)
+    setColapsComp(true)
+  }else{
+    setColaps(!colaps)
+  }}
+
+const colapsfuncComp =()=>{
+  if(!colaps && colapsComp){
+    setColaps(true)
+    setColapsComp(false)
+  }else{
+    setColapsComp(!colapsComp)
+  }}
+
   return (
     <div className='ml-10'>
         
           <div className=''>
-        <GridTable head={head} row={data?.Result} setHead={setHead}    GridTitle='Active' GridColor="indigo-400" GridColaps={false} />
+        <GridTable
+         
+          head={head}
+          row={data?.Result}
+          setHead={setHead}   
+          GridTitle='Active' 
+          GridColor="indigo-400" 
+          GridColaps={false} 
+        
+          colaps={colaps}
+          setColaps={setColaps}
+          colapsfunc={colapsfunc}
+          />
         </div>
         <div className='my-5 '>
-        <GridTable head={head} row={compRow} setHead={setHead} setSubHead={setSubHead} subHead={subHead} formModal={CustomModal} GridTitle='Deactive' GridColor="green-400" GridColaps={true} />
+        <GridTable 
+        head={head} 
+        row={compRow} 
+        setHead={setHead} 
+        setSubHead={setSubHead} 
+        subHead={subHead} 
+        formModal={CustomModal} 
+        GridTitle='Deactive' 
+        GridColor="green-400" 
+        GridColaps={true}
+        
+        colaps={colaps}
+        setColaps={setColaps}
+        colapsfunc={colapsfunc}
+        />
       
         </div>
     </div>
