@@ -33,6 +33,8 @@ const LoginForm = () => {
 
   function getAllTask(data) {
     localStorage.setItem("tokenSession", data.access_token);
+
+   localStorage.setItem("use_id", data.USE_ID);
     //to check if user is log in
     let mCheck = data ? true : false;
   

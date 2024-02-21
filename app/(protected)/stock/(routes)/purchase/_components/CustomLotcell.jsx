@@ -13,6 +13,7 @@ const CustomLotcell = ({ data, rowData, index }) => {
 
   const rowId = useSelector((state) => state.PurchaseSlices.formIndex);
   const lotList = useSelector((state) => state.PurchaseSlices.lotList);
+  const FormStatus = useSelector((state) => state.PurchaseSlices.FormStatus);
   //  const checkUpdatelist = useSelector((state) => state.PurchaseSlices.postPurchaseDetail)
   // console.log('checkUpdatelist' , checkUpdatelist);
   const payload = {
@@ -78,6 +79,7 @@ const CustomLotcell = ({ data, rowData, index }) => {
       <select
         onChange={setChange}
         className="block w-full mt-1 p-2 pr-8  rounded-md shadow-sm focus:outline-none "
+        disabled={FormStatus == 'Issued to Vendor' ? false : true}
       >
         <option value=""></option>
         {lotList?.map((data, i) => {

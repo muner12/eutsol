@@ -18,7 +18,9 @@ body{
 
 /* For the track (the area on which the thumb moves) */
 ::-webkit-scrollbar-track {
-    background-color: transparent; /* You can change this to any color you prefer */
+    background-color: transparent; /* You can change 
+    this to any color you prefer */
+    /* bottom:0 */
 }
 
 /* For the thumb (the draggable bar) */

@@ -10,16 +10,20 @@ const PurchaseGridSku = ({data, rowData, index}) => {
 
     const skuList = useSelector((state) => state.PurchaseSlices.skuList)
     const checkUpdatelist = useSelector((state) => state.PurchaseSlices.postPurchaseDetail)
+    const FormStatus = useSelector((state) => state.PurchaseSlices.FormStatus);
 
     // console.log('checkUpdatelist' , checkUpdatelist);
     const setChange = (e) => {
 
+        const slected = skuList.filter((data) => data.PAR_ID ==  e.target.value) ,
+
         data = {
-            id : e.target.value , 
+            id : slected[0] , 
             indexR : index
         }
 
         dispatch(updatePurchaseSku(data))
+        // console.log('slected sku data' , slected);
 
 
     }
@@ -29,7 +33,13 @@ const PurchaseGridSku = ({data, rowData, index}) => {
             {/* <MdOutlineKeyboardArrowDown  className='text-[25px] text-gray-500' /> */}
 
 
-            <select onChange={setChange} className="block w-full mt-1 p-2 pr-8  rounded-md shadow-sm focus:outline-none " name="" id="">
+            <select 
+             onChange={setChange}
+              className="block w-full mt-1 p-2 pr-8  rounded-md shadow-sm focus:outline-none "
+               name=""
+                id=""
+                disabled={FormStatus == 'Initiated' ? false : true}
+                >
 
                 {
                     skuList?.map((data , i) => {

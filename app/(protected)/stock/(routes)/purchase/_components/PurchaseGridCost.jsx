@@ -15,7 +15,14 @@ const PurchaseGridCost = ({ data , index }) => {
 
   const result = formatNumber(data);
   useEffect(() => {
-    setChangeValue(result);
+    console.log('check result' , data);
+    if(data == null){
+    setChangeValue(0.00);
+
+    }else{
+      setChangeValue(result);
+
+    }
   }, [result]);
 
   const setChange = (e) => {

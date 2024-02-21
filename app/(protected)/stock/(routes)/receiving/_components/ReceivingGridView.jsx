@@ -19,8 +19,8 @@ const ReceivingGridView = () => {
     {
       title: "Priority",
       slector: "Priority",
-      Wid: 200,
-      customComp: ReceivingPriority,
+      Wid: 150,
+      Status: ReceivingPriority,
     },
     { title: "PO #", slector: "PO_NUMBER", Wid: 150 },
     { title: "PO Date", slector: "PO_DATE", Wid: 150, date: true },
@@ -28,8 +28,8 @@ const ReceivingGridView = () => {
     {
       title: "Status",
       slector: "RECEIVING_STATUS",
-      Wid: 200,
-      customComp: ReceivingStatus,
+      Wid: 150,
+      Status: ReceivingStatus,
     },
     { title: "Comments", slector: "Comments", Wid: 200 },
   ]);
@@ -37,10 +37,8 @@ const ReceivingGridView = () => {
   const [data, setData] = useState();
  const [colaps , setColaps] = useState(false)
   const [colapsComp , setColapsComp] = useState(false)
-  const [colapsNew , setColapsNew] = useState(false)
   let [error, sendRequest] = useApiFetch();
-  const [processRow, setProcessRow] = useState([]);
-  const [newRow, setNewRow] = useState([]);
+  const [compRow, setCompRow] = useState([]);
   const apiUrl = `${process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL}InventoryWeb/GetRecievingList`;
 
   const payload = {
@@ -80,18 +78,10 @@ const ReceivingGridView = () => {
     setErrorMessage(error);
   }
   useEffect(() => {
-    data?.Result?.forEach((processRow) => {
-      // console.log('check========', processRow.RECEIVING_STATUS );
-      if (processRow?.RECEIVING_STATUS == "IN PROCESS") {
-        setProcessRow((prev) => [...prev, processRow]);
-      }
-    });
-  }, [data]);
-  useEffect(() => {
-    data?.Result?.forEach((newRow) => {
-      // console.log('check========', processRow.RECEIVING_STATUS );
-      if (newRow?.RECEIVING_STATUS == "NEW") {
-        setNewRow((prev) => [...prev, newRow]);
+    data?.Result?.forEach((compRow) => {
+      // console.log('checkING status', compRow.RECEIVING_STATUS );
+      if (compRow?.RECEIVING_STATUS == "RE-STOCKED") {
+        setCompRow((prev) => [...prev, compRow]);
       }
     });
   }, [data]);
@@ -100,45 +90,29 @@ const ReceivingGridView = () => {
     sendRequest(apiUrl, "POST", payload, getAllTask, accessToken);
   }, []);
 
-  const colapsfunc = () => {
-  if (colaps && !colapsComp || !colapsNew) {
-    setColaps(false);
-    setColapsComp(true);
-    setColapsNew(true)
-  } 
-  else {
-    setColaps(!colaps); 
+  const colapsfunc =()=>{
+    if(colaps && !colapsComp){
+      setColaps(false)
+      setColapsComp(true)
+    }else{
+      setColaps(!colaps)
+    }
   }
-};
-
-const colapsfuncComp = () => {
-  if (!colaps && colapsComp || !colapsNew) {
-    setColaps(true);
-    setColapsComp(false);
-    setColapsNew(true)
-  } 
-  else {
-    setColapsComp(!colapsComp);
+  const colapsfuncComp =()=>{
+    if(!colaps && colapsComp){
+      setColaps(true)
+      setColapsComp(false)
+    }else{
+      setColapsComp(!colapsComp)
+    }
   }
-};
-
-const colapsfuncNew = () => {
-  if (colapsNew && !colapsComp || !colaps) {
-    setColaps(true);
-    setColapsComp(true);
-    setColapsNew(false);
-  } 
-  else {
-    setColapsNew(!colapsNew);
-  }
-};
 
 
   return (
   
     <div className=" w-full">
       <div className="h-full w-full">
-<div className="h-fit max-h-[28vh] lgdesktop:max-h-[28vh] desktop:max-h-[28vh] laptop:max-h-[28vh] tablet:max-h-[28vh] overflow-auto">
+<div className="h-fit max-h-[50vh] lgdesktop:max-h-[57vh] desktop:max-h-[43vh] laptop:max-h-[43vh] tablet:max-h-[50vh] overflow-y-auto">
         <GridTable
         head={head}
         row={data?.Result}
@@ -151,50 +125,21 @@ const colapsfuncNew = () => {
             colapsfunc={colapsfunc}
       />
       </div>
-      <div className="h-fit max-h-[28vh] lgdesktop:max-h-[28vh] desktop:max-h-[28vh] laptop:max-h-[28vh] tablet:max-h-[28vh] overflow-auto">
+      <div className="h-fit max-h-[50vh] lgdesktop:max-h-[57vh] desktop:max-h-[43vh] laptop:max-h-[43vh] tablet:max-h-[50vh] overflow-y-auto">
         <GridTable
         head={head}
-        row={processRow}
+        row={compRow}
         setHead={setHead}
-        GridTitle="In Process"
-        GridColor="indigo-400"
+        GridTitle="Completed"
+        GridColor="pink-400"
         GridColaps={true}
         colaps={colapsComp}
             setColaps={setColapsComp}
             colapsfunc={colapsfuncComp}
       />
       </div>
-      <div className="h-fit max-h-[28vh] lgdesktop:max-h-[28vh] desktop:max-h-[28vh] laptop:max-h-[28vh] tablet:max-h-[28vh] overflow-auto">
-       <GridTable
-        head={head}
-        row={newRow}
-        setHead={setHead}
-        GridTitle="New"
-        GridColor="cyan-400"
-        GridColaps={true}
-        colaps={colapsNew}
-            setColaps={setColapsNew}
-            colapsfunc={colapsfuncNew}
-      />
-      </div>
       </div>
       
-      {/* <GridTable
-        head={head}
-        row={processRow}
-        setHead={setHead}
-        GridTitle="In Process"
-        GridColor="indigo-400"
-        GridColaps={true}
-      />
-      <GridTable
-        head={head}
-        row={newRow}
-        setHead={setHead}
-        GridTitle="New"
-        GridColor="cyan-400"
-        GridColaps={true}
-      /> */}
     </div>
   );
 };

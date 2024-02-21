@@ -23,7 +23,8 @@ const CustomModal = ({ isOpen, onClose, tabs, heading, onClickApply, onClickLock
     //Main div
     <div className="fixed   inset-0 z-50  bg-black bg-opacity-50 flex">
       <div className="relative p-6 bg-white h-[90vh] w-[95%] mx-auto  mt-9 rounded-md flex flex-col">
-        {/* headin and cross icon */}
+        <div className="h-[22vh] lgdesktop:h-[17vh]">
+         {/* headin and cross icon */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center">
             <h1 className="H mb-2 text-gray-400">{heading}</h1>
@@ -98,12 +99,14 @@ const CustomModal = ({ isOpen, onClose, tabs, heading, onClickApply, onClickLock
               </p>
             </div>
           </div>
-          {/* modal body */}
-          <div className="bg-gray-100 h-[60vh] overflow-auto ">
+        </div>   
+        </div>
+        {/* modal body */}
+          <div className="bg-gray-100 h-[60vh] lgdesktop:h-[70vh]  overflow-auto ">
             <div className="rounded-sm p-2 ">{tabs[activeTab].content}</div>
           </div>
-        </div>
       </div>
+
     </div>
   );
 };

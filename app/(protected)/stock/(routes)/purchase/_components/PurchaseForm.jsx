@@ -74,7 +74,6 @@ console.log('check postPurchaseOrder' , postPurchaseOrder);
 
   function getAllTask(data) {
 
-    // console.log('check data ====' , data);
 
     dispatch(subGridset(data.Result.INV_PURCHASE_ORDER_DETAILS_WV))
     dispatch(setPurchaseDetails(data.Result.INV_PURCHASE_ORDERS_WV[0]))
@@ -191,9 +190,11 @@ console.log('check postPurchaseOrder' , postPurchaseOrder);
 
         // NON_STOCK_ITEM_PURCHASE_ORDER_FLAG
       }
+
     })
 dispatch(setUpdatePurchaseDetail(getFilter ))
 dispatch(setUpdatePurchaseOrder(getorderFilter))
+
 
     // setErrorMessage(error)
   }

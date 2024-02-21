@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const InputTextEut = ({ placeHolder, isDisabled, onChange , value ,name}) => {
+const InputTextEut = ({ placeHolder, isDisabled, initialValue, onChange , value }) => {
+
   return (
     <div className='py-2'>
       <input
@@ -8,7 +9,6 @@ const InputTextEut = ({ placeHolder, isDisabled, onChange , value ,name}) => {
         type="text"
         placeholder={placeHolder}
         value={value}
-        name={name}
         onChange={onChange}
         disabled={isDisabled}
       />

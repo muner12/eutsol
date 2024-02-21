@@ -14,7 +14,7 @@ import { GrExpand } from "react-icons/gr";
 
 
 
-const Tooltip = ({ content, children }) => {
+const Tooltip = ({ content, children  }) => {
     const [isTooltipVisible, setTooltipVisible] = useState(false);
    
     
@@ -43,7 +43,7 @@ const Tooltip = ({ content, children }) => {
 
 
 
-  function ModalOpen({ data , length , child , Modall , rowIndex  }) {
+  function ModalOpen({ data , length , child , Modall , rowIndex  ,  Drawer }) {
 
 
    
@@ -62,8 +62,7 @@ const Tooltip = ({ content, children }) => {
       <div className=' group flex justify-between w-full text-[14px] pl-2 items-center'>
     <div className="flex">  {data} <span className={`ml-2 ${length == 0 && 'hidden'} bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>   </div> 
        <div className="flex">
-
-        <div className=" hidden items-center mr-2  group-hover:flex"><GrExpand className="mr-2" />Open</div>
+{Drawer &&  <Drawer index={index} />}
         <Tooltip content="Open  Form">
           <div className=' flex items-center px-3 border-l'>
             

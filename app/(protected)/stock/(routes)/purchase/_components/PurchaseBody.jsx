@@ -11,8 +11,9 @@ import PurchaseFormModall from "./PurchaseFormModall";
 import PurchasePiriority from "./PurchasePiriority";
 import { useSelector, useDispatch } from "react-redux";
 import { purchaseSku } from "../redux/Purchase.slice";
-
 import StatusCell from "../../../../../../components/misc/GridTable/StatusCell";
+import OpenDrawer from "../../../../../../components/misc/GridTable/OpenDrawer"
+import PurchaseGriddAdd from "./PurchaseGriddAdd"
 
 const PurchaseBody = () => {
   let [error, sendRequest] = useApiFetch();
@@ -27,6 +28,7 @@ const PurchaseBody = () => {
       Wid: 250,
       filter: "textFilter",
       Modal: PurchaseFormModall,
+      Drawer: OpenDrawer
     },
     { title: "Order Date", Wid: 150, slector: "PPROVED_DATE", date: true },
     {
@@ -198,6 +200,8 @@ const PurchaseBody = () => {
             colaps={colaps}
             setColaps={setColaps}
             colapsfunc={colapsfunc}
+            addButton={true}
+            GriddFooterAdd={PurchaseGriddAdd}
           />
         </div>
         <div className="my-3  overflow-auto h-fit lgdesktop:max-h-[57vh] desktop:max-h-[43vh] laptop:max-h-[43vh] tablet:max-h-[50vh] max-h-[50vh]">
@@ -213,6 +217,8 @@ const PurchaseBody = () => {
             colaps={colapsComp}
             setColaps={setColapsComp}
             colapsfunc={colapsfuncComp}
+            addButton={true}
+            GriddFooterAdd={PurchaseGriddAdd}
           />
         </div>
       </div>

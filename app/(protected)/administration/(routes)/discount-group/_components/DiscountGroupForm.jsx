@@ -22,18 +22,21 @@ import DiscountGroupGrid from './DiscountGroupGrid'
 import TextArea from '../../../../../../components/misc/textinput/TextArea'
 import { Switch } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFormData } from '../_redux/DiscountGroupSlice'
+import { setFormData, setValidCode, validateCode } from '../_redux/DiscountGroupSlice'
+import { useRouter } from 'next/navigation'
+import useApiFetch from '../../../../../../customHook/CustomHook'
 // import PhoneNumber from './GridTable/PhoneNumber'
+
 
 const DiscountGroupForm = (prop) => {
 
-  
+  let router=useRouter();
   
 let data=prop.data
 
 let dispatch=useDispatch();
   const [enabled, setEnabled] = useState(false);
-  const [edit,setEdit]=useState({});
+  const [enabledCode,setEnabledCode]=useState(true);
   
 const [code,setCode]=useState(data.CODE);
 
@@ -44,6 +47,17 @@ const [desc,setDesc]=useState(data.DESCRIPTION);
 
 const [status,setStatus]=useState(data.ACTIVE_FLAG);
 
+const [dgrp,setDgrp]=useState(data.DISGRP_ID);
+
+
+
+let responseFormData=useSelector(state=>state.discountGroup.data);
+useEffect(()=>{
+ 
+  if(responseFormData.CODE==="SUCCESS"){
+   //
+  }
+},[])
 
 
 
@@ -55,21 +69,39 @@ const [status,setStatus]=useState(data.ACTIVE_FLAG);
       const [item, setItem] = useState("Working on it");
       const [itemPriority, setItemPriority] = useState("High")
     
-      // console.log('==== log item ====',item);
-      // 
     
-      const getSlect = (e) => {
+      //check if code valid or not
+      const [apiResponse,setApiResponse]=useState();
+      let [error,sendRequest]=useApiFetch();
 
-
-        setItem(e.target.value)
-      }
-
+     let getAllTask=(data)=>{
+    
+        setApiResponse(data);
+        dispatch(setValidCode(data));
+     }
+     let valideCode=useSelector(state=>state.discountGroup.code)
+     let loading=useSelector(state=>state.discountGroup.loading);
+     let value= !loading && valideCode.Result
+     console.log("code",value && value[0].VALIDATION_RESULT);
      
-
-
       //changehandlers
       const handleCodeChange = (e) => {
-        setCode(e.target.value);
+
+       
+        let newdata={
+          data: {
+              TYPE: "DISCOUNT_GROUP_CODE",
+              CODE:e.target.value
+          },
+          action: "InventoryWeb",
+          method: "GetCodeUniqueValidation",
+          username: "testuser",
+          type: "rpc",
+          tid: "144"
+      }
+     dispatch(validateCode(newdata));
+      setCode(e.target.value);
+        
       };
     
       const handleNameChange = (e) => {
@@ -83,6 +115,8 @@ const [status,setStatus]=useState(data.ACTIVE_FLAG);
       const handleDescChange = (e) => {
         setDesc(e.target.value);
       };
+
+
       const handleStatusChange = (e) => {
         setStatus(e.target.value);
       };
@@ -93,13 +127,22 @@ const [status,setStatus]=useState(data.ACTIVE_FLAG);
         NAME: name,
         DISCOUNT_PERCENTAGE: descountPercent,
         DESCRIPTION: desc,
-        ACTIVE_FLAG: status
+        ACTIVE_FLAG: status,
+        DISGRP_ID: dgrp,
       };
       dispatch(setFormData(formData));
   
       // Submit formData to your API
-      console.log('Submitted data:', formData);
    
+   const newClickHandler=()=>{
+     setCode('');
+     setName('');
+     setDescountPercent('');
+     setDesc('');
+     setStatus('');
+     setEnabledCode(false);
+     
+   }
   return (
     <div className=' bg-gray-100 rounded-lg'>
 
@@ -107,7 +150,7 @@ const [status,setStatus]=useState(data.ACTIVE_FLAG);
 
       <div className='  border bg-white w-[60%] rounded-md   ' >
 
-        <DiscountGroupFormHeader onClick={()=>{}}/>
+        <DiscountGroupFormHeader onClick={newClickHandler}/>
         <div className='w-full  bg-white overflow-auto  pb-2'>
         <div className=' bg-white   mt-2 pl-2  '>
           {/* <GridTable head={head} row={row} setHead={setHead} /> */}
@@ -143,8 +186,9 @@ const [status,setStatus]=useState(data.ACTIVE_FLAG);
             <p className='py-3 text-gray-900 text-[14px]'>Status</p>
             <div className='flex items-center'>
 
-              <div className={`p-1 h-[30px] mr-2 rounded-full ${status == "Y" ? "bg-green-600" : status == "N" ? "bg-red-400" : item == "Low" ? "bg-cyan-400" : item == "Working on it" ? "bg-yellow-400" : item == "Done" ? "bg-green-500" : item == "Stuck" ? "bg-red-600" : item == "initiated" ? "bg-zinc-400" : item == "issued" ? "bg-blue-600" : item == "Ready" ? "bg-indigo-500" : ""}`}></div>
+              <div className={`p-1 h-[30px] mr-2 rounded-full ${status == "Y" ? "bg-green-600" : status == "N" ? "bg-red-400" : "bg-slate-300"}`}></div>
               <select className='outline-none text-[16px]' onChange={handleStatusChange}>
+              <option value="null">--select--</option>
                 <option value="Y" selected={status=="Y"?true:false}>Active</option>
                 <option value="N" selected={status=="N"?true:false}>Deactive</option>
                
@@ -173,9 +217,11 @@ const [status,setStatus]=useState(data.ACTIVE_FLAG);
 
 
 
-         <InputTextEut onChange={handleCodeChange} name={"CODE"} label="CODE" placeHolder='CODE' isDisabled={enabled} value={code}/>
-        
-        
+         <InputTextEut onChange={handleCodeChange} name={"CODE"} label="CODE" placeHolder='CODE' isDisabled={enabledCode} value={code}/>
+          {
+            value && value[0].VALIDATION_RESULT==="FALSE"?(<span className='text-red-500'>code already exists</span>):""
+          }
+         
           <InputTextEut onChange={handleNameChange} name={"NAME"} label="Name" placeHolder='Name' isDisabled={enabled}  value={name}/>
           <InputTextEut onChange={handleDiscountPercentChange} name={"DISCOUNT_PERCENTAGE"} label="Discount Percentage" placeHolder='Discount Percentage' isDisabled={enabled} value={descountPercent}/>
           

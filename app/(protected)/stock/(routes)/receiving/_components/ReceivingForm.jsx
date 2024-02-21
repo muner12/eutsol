@@ -9,7 +9,7 @@ import useApiFetch from "../../../../../../customHook/CustomHook";
 import InputTextEut from "../../../../../../components/misc/textinput/InputTextEut";
 import TextArea from "../../../../../../components/misc/textinput/TextArea";
 import Tooltip from "../../../../../../components/misc/tooltip/Tooltip";
-import {setUpdatedReceving,setUpdatedReceivingDetail, updateRefNumber, updateNotes} from '../redux/receivingSlices'
+import {setUpdatedReceving,setUpdatedReceivingDetail, updateRefNumber, updateNotes, subGridset, setReceivingDetails} from '../redux/receivingSlices'
 import { MdEdit } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
 import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
@@ -18,6 +18,7 @@ import moment from "moment";
 
 const ReceivingForm = () => {
   const formIndex = useSelector((state) => state.receivingSlices.formIndex);
+  const rowData = useSelector(state => state.receivingSlices.subGridState);
   const dispatch = useDispatch()
  const [ref, setRef] = useState('');
   const [commentvalue, setCommentValue] = useState('');
@@ -25,6 +26,8 @@ const ReceivingForm = () => {
   const [phone,setPhone]=useState('');
   const [ponumber,setPoNumber]=useState('');
   const [podate,setPoDate]=useState('');
+ const [colaps , setColaps] = useState(false)
+
 // console.log("po number checking",ponumber)
 // console.log("po number checking",setPoNumber)
 
@@ -89,16 +92,19 @@ const ReceivingForm = () => {
 
 //funtions
 const handleRefChange = (e) => {
-  const ref = {
-    refNumber : e.target.value
-  }
-  dispatch(updateRefNumber(ref));
+  // const ref = {
+  //   refNumber : e.target.value
+  // }
+  dispatch(updateRefNumber(e.target.value));
   setRef(e.target.value);
 };
 
 const handleCommentChange = (e) => {
-  dispatch(updateNotes({ payload: { NOTES: e.target.value } }));
+  // const notes = {
+  //   Notes : e.target.value
+  // }
   setCommentValue(e.target.value);
+  dispatch(updateNotes(e.target.value));
 };
   const handlePhoneChange = (e) => {
     setPhone(e.target.value);
@@ -114,15 +120,15 @@ const handleCommentChange = (e) => {
   };
 
   function getAllTask(data) {
-    setData(data);
-    
-    // setErrorMessage(error);
-    setRef(data?.Result.Results[0]?.RECEIVING_REFERENCE_NUMBER)
-    setCommentValue(data?.Result.Results[0]?.RECEIVING_NOTES)
+    dispatch(subGridset(data.Result.Table1))
+    dispatch(setReceivingDetails(data?.Result.Results[0]))
+    setData(data.Result.Results[0]);
+    setRef(data?.Result.Results[0]?.RECIEVING_REFERENCE_NUMBER)
+    setCommentValue(data?.Result.Results[0]?.RECIEVING_NOTES)
     setPhone(data?.Result.Results[0]?.SUPPLIER_PHONE)
     setEmail(data?.Result.Results[0]?.SUPPLIER_EMAIL)
     setPoDate(data?.Result?.Results[0]?.PO_DATE
-                  ? moment(data?.Result?.Results[0]?.PO_DATE).format("MMM Do")
+                  ? moment(data?.PO_DATE).format("MMM Do")
                   : "January 24")
     setPoNumber(data?.Result.Results[0]?.PO_NUMBER)
     // console.log("checking data",data)
@@ -173,7 +179,7 @@ const handleCommentChange = (e) => {
       USE_ID_RELEASED_BY,
    }
   });
-  // PostRecevingDetail grid data
+  // postReceivingDetail grid data
   const PostReceivingDetailPayload = data?.Result.Table1.map((items)=>{
     const {
         INVRECDET_ID,
@@ -223,23 +229,23 @@ const handleCommentChange = (e) => {
   dispatch(setUpdatedReceving(PostReceivingPayload))
   dispatch(setUpdatedReceivingDetail(PostReceivingDetailPayload))
   }
-  // function postReceving(postreceiving){
+  // function postReceiving(postreceiving){
   //   setPostReceiving(postreceiving)
-  //   console.log("Post Receving",postReceving)
+  //   console.log("Post Receving",postReceiving)
   // }
-  //  function postRecevingDetail(postreceivingdetail){
+  //  function postReceivingDetail(postreceivingdetail){
   //   setPostReceivingDetail(postreceivingdetail)
-  //   console.log("Post Receving Detail",postRecevingDetail)
+  //   console.log("Post Receving Detail",postReceivingDetail)
   // }
 
   useEffect(() => {
     sendRequest(apiUrl, "POST", payload, getAllTask, accessToken);
-    // sendRequest(PostReceivingUrl, "POST", PostReceivingPayload,postReceving, accessToken);
+    // sendRequest(PostReceivingUrl, "POST", PostReceivingPayload,postReceiving, accessToken);
     // sendRequest(
     //   PostReceivingDetailUrl,
     //   "POST",
     //   PostReceivingDetailPayload,
-    //   postRecevingDetail,
+    //   postReceivingDetail,
     //   accessToken
     // );
   },[]);
@@ -290,25 +296,31 @@ const handleCommentChange = (e) => {
   //   validationSchema: validationSchema,
   //   onSubmit: (values) => {},
   // });
-
+  const colapsfuncComp =()=>{
+    
+  }
   return (
     <div className="bg-gray-100 rounded-lg">
       <div className="gap-2 flex p-3 rounded-lg">
-        <div className="  border  w-[70%] rounded-md   ">
+        <div className="  border  w-[70%] lgdesktop:w-[75%] rounded-md   ">
           <ReceivingFormHeader
-            supplier={data?.Result.Results[0]?.SUPPLIER ?? ""}
+            supplier={data?.SUPPLIER ?? ""}
           />
-          <div className="w-full h-[90%]  bg-white overflow-auto  pb-2">
-            <div className=" bg-white   mt-2 pl-2  ">
+          <div className="w-full bg-white overflow-auto pb-2">
+            <div className=" bg-white h-[52vh] desktop:h-[71vh] laptop:h-[81vh]  mt-2 pl-2  ">
               <GridTable
-                row={data?.Result.Table1}
+                // row={data?.Result.Table1}
+                row={rowData}
                 head={head}
                 setHead={setHead}
+                colaps={colaps}
+                setColaps={setColaps}
+                colapsfunc={colapsfuncComp}
               />
             </div>
           </div>
         </div>
-        <div className="w-[30%]  p-2 rounded-sm bg-white shadow-sm shadow-gray-400 !overflow-x-auto">
+        <div className="w-[30%] lgdesktop:w-[25%]  p-3 rounded-sm bg-white shadow-sm shadow-gray-400 !overflow-x-auto">
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
               <Tooltip content="Edit">
@@ -326,25 +338,25 @@ const handleCommentChange = (e) => {
             </div>
             <div className="">
               <p className="H text-gray-800   text-[20px]">
-                {data?.Result.Results[0]?.RECEIVING_NUMBER ?? "REC0985673"}
+                {data?.RECEIVING_NUMBER ?? "REC0985673"}
               </p>
               <p className="H text-gray-500  text-right ">
                 {" "}
-                {data?.Result?.Results[0]?.REC_DATE
-                  ? moment(data?.Result?.Results[0]?.REC_DATE).format("MMM Do")
+                {data?.REC_DATE
+                  ? moment(data?.REC_DATE).format("MMM Do")
                   : "January 24"}
               </p>
             </div>
           </div>
           <div className="w-full mt-4 mb-2">
-            <div className="w-full bg-indigo-400 text-white flex justify-center items-center font-semibold py-2 rounded-md">
+            <div className="w-full bg-indigo-400 text-white flex justify-center items-center font-semibold py-2 rounded-full">
               <ReceivingTooltip content="RE-STOCK">
                 <p>RE-STOCK</p>
               </ReceivingTooltip>
             </div>
           </div>
           <div className="w-full mt-2">
-            <div className="w-full bg-orange-500 text-white flex justify-center items-center font-semibold rounded-md py-2">
+            <div className="w-full bg-orange-500 text-white flex justify-center items-center font-semibold rounded-full py-2">
               <ReceivingTooltip content="High">
                 <p>High</p>
               </ReceivingTooltip>

@@ -11,7 +11,7 @@ import GridFilterNum from "./GridFilterNum";
 import GridCheckFilter from "./GridCheckFilter";
 import { TiArrowUnsorted } from "react-icons/ti";
 import GridDateFilter from "./GridDateFilter";
-import TooltipStatus from "../../../app/(protected)/stock/(routes)/purchase/_components/PurchaseTooltip"
+import TooltipStatus from "../../../app/(protected)/stock/(routes)/purchase/_components/PurchaseTooltip";
 
 const GridTest = ({
   head,
@@ -25,6 +25,8 @@ const GridTest = ({
   colaps,
   setColaps,
   colapsfunc,
+  addButton,
+  GriddFooterAdd
 }) => {
   const [dropDown, setDropDown] = useState();
   const [cells, setCells] = useState(0);
@@ -144,6 +146,17 @@ const GridTest = ({
     getRowTottal();
   }, [row, footerTottal]);
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      // Do something when Enter key is pressed
+      // const valuesCopy = { ...inputValues };
+      // Push the copy into the 'row' array
+      // setRow((prevRow) => [...prevRow, valuesCopy]);
+      // console.log('Enter key pressed!');
+      // console.log('Input value:', row);
+    }
+  };
+
   return (
     <div>
       <div
@@ -256,6 +269,19 @@ const GridTest = ({
 
                         setActiveEdit(data);
                       };
+                      const handleKeyPress = (event) => {
+                        if (event.key === "Enter") {
+                          // Do something when Enter key is pressed
+                          // const valuesCopy = { ...inputValues };
+                          setActiveEdit("");
+
+                          // Push the copy into the 'row' array
+                          // setRow((prevRow) => [...prevRow, valuesCopy]);
+                          // console.log('Enter key pressed!');
+                          // console.log('Input value:', row);
+                        }
+                      };
+
                       if (
                         rowI == activeEdit?.rowIndex &&
                         activeEdit?.slector == header.slector
@@ -380,6 +406,7 @@ const GridTest = ({
                               rowI === activeEdit?.rowIndex ? (
                                 <input
                                   placeholder={rowData[header.slector]}
+                                  onKeyPress={handleKeyPress}
                                   className="w-full text-gray-500 text-[14px]"
                                   type="text"
                                 />
@@ -389,7 +416,8 @@ const GridTest = ({
                                   <ModalOpen
                                     data={rowData[header.slector]}
                                     rowIndex={rowData}
-                                    Modall={header.Modal}
+                                    Modall={header?.Modal}
+                                    Drawer={header?.Drawer}
                                     child={false}
                                     length={
                                       rowData?.childrenData?.length > 0
@@ -399,7 +427,7 @@ const GridTest = ({
                                   />{" "}
                                 </div>
                               ) : (
-                                <p className="text-[14px] line-clamp-1 py-1 ">
+                                <p className=" text-[14px] line-clamp-1 py-1 ">
                                   {rowData[header.slector]}
                                 </p>
                               )}
@@ -466,23 +494,19 @@ const GridTest = ({
                       ""
                     )}
                     {data.Status ? (
-                        
                       <div className="w-full  ">
+                        <div className="flex cursor-pointer px-1">
+                          <div className="w-[30%] bg-yellow-400 text-yellow-400 ">
+                            -
+                          </div>
+                          <div className="w-[20%] bg-orange-400 text-orange-400">
+                            -
+                          </div>
 
-<div className="flex cursor-pointer px-1">
-
-                        <div className="w-[30%] bg-yellow-400 text-yellow-400 ">
-                          -
+                          <div className="w-2/4 bg-green-400 text-green-400">
+                            -
+                          </div>
                         </div>
-                        <div className="w-[20%] bg-orange-400 text-orange-400">
-                          -
-                        </div>
-
-                        <div className="w-2/4 bg-green-400 text-green-400">
-                          -
-                        </div>
-                        </div>
-                     
                       </div>
                     ) : (
                       ""
@@ -501,16 +525,18 @@ const GridTest = ({
                       ""
                     )}
 
-                    {
-                        i == 0 ?
-                        <div className="text-gray-500  w-full px-2">
-                        <div className="w-full hover:bg-gray-100 flex justify-start ">
-                            <input className="bg-transparent pl-2  w-full   outline-1 outline-gray-300" type="text" placeholder="+ Add product"/>
-                        </div>
-                        </div>
-                        :
-                        ''
-                    }
+                    {i == 0 && addButton ? (
+                      <div className="text-gray-500  w-full px-2">
+                        {
+                            GriddFooterAdd ?
+                            <GriddFooterAdd/>
+                            :''
+                        }
+
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 );
               })}

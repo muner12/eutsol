@@ -1,14 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillUnlock } from "react-icons/ai";
 import { SlArrowDown } from "react-icons/sl";
 import {  useDispatch, useSelector } from "react-redux";
 import CustomModalButton from "./CustomModalButton";
-
+import { updateDiscountGroup, updateforRefresh } from "../_redux/DiscountGroupSlice";
+import {isObjectsEqul} from "./customFunctions.js"
+import useApiFetch from "../../../../../../customHook/CustomHook";
+import { send } from "process";
 const DiscountGroupCustomModal = ({ isOpen, onClose, tabs, heading }) => {
+
   const dispatch = useDispatch()
+  const [apiResponse,setApiResponse] =useState();
+
+
   const data=useSelector((state)=>state.discountGroup.formData);
-  console.log(data);
+  const prevFormdata=useSelector((state)=>state.discountGroup.prevFormData);
+  let refresh=useSelector((state)=>state.discountGroup.data);
+  
+  //const error=useSelector((state)=>state.discountGroup.error);
+
+//custom Hook
+let [error,sendRequest]=useApiFetch();
+
+
+
+ // console.log( );
+ 
   const [activeTab, setActiveTab] = useState(0);
 
   if (!isOpen) {
@@ -22,7 +40,40 @@ const DiscountGroupCustomModal = ({ isOpen, onClose, tabs, heading }) => {
   const handleApply = () => {
     // dispatch(setApply(true))
   };
-  
+  let isFieldsChanged=isObjectsEqul(data,prevFormdata[0])
+  let url=process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL+"Administration/PostDiscountGroup";
+let accessToken=localStorage.getItem("tokenSession");
+let getAllTask = (data) =>{
+  dispatch(updateforRefresh(data))
+  setApiResponse(data);
+}
+  const editClickHandler=()=>{
+   if(isFieldsChanged===false){
+    let newdata={
+      data: data,
+      action: "Administration",
+      method: "PostDiscountGroup",
+      username: "testuser",
+      type: "rpc",
+      tid: "144"
+  }
+    sendRequest(url,"POST",newdata,getAllTask,accessToken);
+
+    // dispatch(updateDiscountGroup(data));
+    // setInterval(()=>{
+    //   onClose();
+    // },500)
+   }
+      
+    // !loading && 
+   
+  }
+
+  const newClickHandler=()=>{
+    
+  }
+console.log("api response",apiResponse)
+console.log("redux",refresh)
 
   return (
     //Main div
@@ -72,8 +123,8 @@ const DiscountGroupCustomModal = ({ isOpen, onClose, tabs, heading }) => {
             ))}
             <div className="ml-auto flex space-x-1 mb-2">
               {/* Add your buttons here */}
-            <CustomModalButton label={"apply"}/>
-              <button className="bg-[#6DB4B3] text-white text-xs px-4 py-2  rounded-sm">
+            <CustomModalButton label={"apply"} onClick={editClickHandler} flag={isFieldsChanged}/>
+              <button onClick={newClickHandler} className="bg-[#6DB4B3] text-white text-xs px-4 py-2  rounded-sm">
                 Lock
               </button>
               {/* <button onClick={handleApply} className="bg-[#6DB4B3] text-white text-xs px-2  rounded-sm">

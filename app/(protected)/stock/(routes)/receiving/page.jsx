@@ -1,15 +1,34 @@
 'use client'
 import React,{useState} from "react";
 import ReceivingGridView from "./_components/ReceivingGridView";
+import ReceivingInnerGrid from "./_components/ReceivingInnerGrid";
 import DashbordNav from "../../../dashbord/_components/DashbordNav";
 import RightDrawer from "../../../../../components/misc/rightdrawer/RightDrawer";
+import PurchaseDrawer from '../purchase/_components/PurchaseDrawer'
+import { GoHome } from "react-icons/go";
+import { SlArrowDown } from "react-icons/sl";
 
 export default function Receiving() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawer, setIsDrawer] = useState(false);
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
+  const handleOpenDrawer = () => {
+    setIsDrawer(true);
   };
+   const handleCloseDrawer = () => {
+    setIsDrawer(false);
+  };
+  const tabs = [
+    {
+      icon: <GoHome />,
+      label: 'Details',
+      content: <div><PurchaseDrawer btnText="Add New Product"/></div>,
+    },
+    {
+      icon: <SlArrowDown className="pl-2 text-md" />,
+      label: 'More',
+      content: <div>Content for More</div>,
+    },
+  ];
   return (
     <div className="h-fit lgdesktop:h-[88vh] desktop:h-[88vh] laptop:h-[85vh] tablet:h-[87vh]">
       <div className="">
@@ -19,14 +38,12 @@ export default function Receiving() {
         />
       </div>
       <div>
-        <button onClick={toggleDrawer}>
-          {isDrawerOpen ? "Close" : "Open"} Right Drawer
+        <button onClick={handleOpenDrawer}>
+          Open Right Drawer
         </button>
-        <RightDrawer isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} >
-           <p>This is the content of the drawer.</p>
-        </RightDrawer>
+        <RightDrawer isOpen={isDrawer} onClose={handleCloseDrawer} heading="New Purchase" tabs={tabs} />
       </div>
-      <div className="overflow-auto pl-5 h-[75%] w-full">
+      <div className=" pl-5 h-[75%] w-full">
         <ReceivingGridView />
       </div>
     </div>

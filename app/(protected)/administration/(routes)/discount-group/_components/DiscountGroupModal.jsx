@@ -12,6 +12,7 @@ import PurchaseForm from "../../../../../../components/misc/PurchaseForm";
 import DiscountGroupForm from "./DiscountGroupForm";
 import { useDispatch } from "react-redux";
 import { setFormData } from "../_redux/DiscountGroupSlice";
+import { TbDeviceIpadHorizontalPlus } from "react-icons/tb";
 
 
 const Tooltip = ({ content, children }) => {
@@ -61,17 +62,26 @@ const Tooltip = ({ content, children }) => {
   ]; 
 
     return (
-      <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
-    <div className="flex">  {data}<span className={`ml-2 bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
-        <Tooltip content="Open Discount Group">
-          <div className=' flex items-center px-3 border-l'>
-            <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' />
-          </div>
-        </Tooltip>
+
+
+      <div>
       
+        <TbDeviceIpadHorizontalPlus onClick={handleOpenModal} className='text-[25px] text-gray-500' />
         <DiscountGroupCustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Discount Group"/>
 
-      </div>
+        </div>
+
+    //   <div className='flex justify-between w-full text-[14px] pl-2 items-center'>
+    // <div className="flex">  {data}<span className={`ml-2 bg-gray-300 text-gray-500 flex ${child && "hidden"} w-[20px]  text-[12px]  justify-center items-center rounded-sm px-[3px]`}>{length}</span>  </div> 
+    //     <Tooltip content="Open Discount Group">
+    //       <div className=' flex items-center px-3 border-l'>
+    //         <BiMessageSquareAdd onClick={handleOpenModal} className='text-[22px] text-gray-500' />
+    //       </div>
+    //     </Tooltip>
+      
+    //     <DiscountGroupCustomModal tabs={tabs} isOpen={isModalOpen} onClose={handleCloseModal} heading="Discount Group"/>
+
+    //   </div>
     );
   }
   
