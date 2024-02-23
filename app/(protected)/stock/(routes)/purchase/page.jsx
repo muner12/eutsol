@@ -12,7 +12,7 @@ export default function Purchase() {
     <div className=" h-[88vh]   ">
 
       {/* <CustomeForm />   */}
-      {/* <PurchaseForm/> */}
+      {/* <PurchaseForm/> dad*/}
       
         <div className="lgdesktop:h-[15vh] desktop:h-[20vh] laptop:h-[25vh]  tablet:h-[25vh] h-[25vh]">
           <DashbordNav heading="Purchase Order" ptext="Welcome to contacts board! here you can store manage all of your contacts " />
